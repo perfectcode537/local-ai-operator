@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Local AI Operator - Concept Demo</title>
+  <meta name="description" content="Interactive concept demo of a local AI operator: plain-English goals, checkpointed tasks, isolated workspaces, phone approvals, live call assist and honest reporting.">
+  <meta name="theme-color" content="#050E0B">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23050E0B'/%3E%3Crect x='8' y='8' width='16' height='16' rx='3' fill='none' stroke='%23FFCD00' stroke-width='2.5'/%3E%3Crect x='13' y='13' width='6' height='6' rx='1' fill='%2300A651'/%3E%3C/svg%3E">
+  <script type="importmap">
+    { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" } }
+  </script>
+</head>
+<body>
+
+<header class="nav" id="top">
+  <div class="wrap nav-inner">
+    <a href="#top" class="brand">
+      <span class="brand-mark"><i></i></span>
+      <span>Local AI Operator</span>
+    </a>
+    <nav class="nav-links">
+      <a href="#console">Console</a>
+      <a href="#workspaces">Workspaces</a>
+      <a href="#phone">Approvals</a>
+      <a href="#call">Call assist</a>
+      <a href="#learn">Learning</a>
+      <a href="#phases">Phases</a>
+    </nav>
+    <span class="badge-sim">Concept demo &middot; simulated data</span>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <video class="hero-video" autoplay muted loop playsinline poster="assets/img/operator-poster.jpg">
+    <source src="assets/video/operator-loop.mp4" type="video/mp4">
+  </video>
+  <div class="hero-shade"></div>
+  <canvas id="scene" aria-hidden="true"></canvas>
+
+  <div class="wrap hero-inner">
+    <div class="hero-copy">
+      <p class="eyebrow"><span class="dot"></span>Always-on &middot; Local first &middot; Controlled in code</p>
+      <h1>One office PC.<br>One operator.<br><em>Every business in its own lane.</em></h1>
+      <p class="hero-sub">Give it an outcome in plain English. It plans the work, does it through APIs, websites and desktop apps, checks the real result, and tells you honestly what happened.</p>
+      <div class="hero-cta">
+        <a href="#console" class="btn btn-gold">Run the console demo</a>
+        <a href="#phases" class="btn btn-ghost">See the build phases</a>
+      </div>
+    </div>
+
+    <div class="hero-stats">
+      <div><b>0</b><span>steps repeated after a crash</span></div>
+      <div><b>10+</b><span>workspaces on one PC</span></div>
+      <div><b>&lt; 3 s</b><span>call answer target</span></div>
+      <div><b>100%</b><span>actions in the audit log</span></div>
+    </div>
+  </div>
+  <div class="scroll-hint"><span></span></div>
+</section>
+
+<!-- ============ PRINCIPLES ============ -->
+<section class="principles wrap">
+  <div class="p-item"><span class="p-k">01</span><h3>The model proposes. The code decides.</h3><p>Budgets, permissions and approvals are enforced by the platform, never by trusting the model.</p></div>
+  <div class="p-item"><span class="p-k">02</span><h3>Verified, not assumed.</h3><p>A task is complete only when the real system shows the result. Confidence scores are not evidence.</p></div>
+  <div class="p-item"><span class="p-k">03</span><h3>Failures are reported as failures.</h3><p>Blocked work is parked, retried later, and handed to a person when it needs one.</p></div>
+</section>
+
+<!-- ============ CONSOLE ============ -->
+<section class="section" id="console">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-tag">Operator console</span>
+      <h2>Give a goal. Watch it plan, act, verify &mdash; and survive a crash.</h2>
+      <p>Pick a goal, run it, then press <b>Kill process</b> mid-task. On resume, completed steps are skipped from their checkpoints and nothing is done twice.</p>
+    </div>
+
+    <div class="console" id="consoleApp">
+      <!-- top bar -->
+      <div class="c-top">
+        <div class="c-dots"><i></i><i></i><i></i></div>
+        <div class="c-title">operator@office-pc &middot; <span id="wsLabel">Business A</span></div>
+        <div class="c-status"><span class="led" id="statusLed"></span><span id="statusText">Idle</span></div>
+        <button class="estop" id="estopBtn" title="Emergency stop">
+          <span class="estop-ring"></span>Emergency stop
+        </button>
+      </div>
+
+      <div class="c-grid">
+        <!-- goal -->
+        <div class="c-col c-goal">
+          <h4>Goal</h4>
+          <div class="presets" id="presets"></div>
+          <div class="goal-box" id="goalText"></div>
+
+          <div class="limits">
+            <div><label>Budget</label><b id="limBudget">-</b></div>
+            <div><label>Per-action limit</label><b id="limAction">-</b></div>
+            <div><label>Time limit</label><b id="limTime">-</b></div>
+            <div><label>Model</label><b>Local &middot; planner-32B</b></div>
+          </div>
+
+          <div class="spend">
+            <div class="spend-row"><span>Spent</span><span id="spendText">A$0 / A$0</span></div>
+            <div class="bar"><i id="spendBar"></i></div>
+          </div>
+
+          <div class="c-actions">
+            <button class="btn btn-gold btn-sm" id="runBtn">Run task</button>
+            <button class="btn btn-danger btn-sm" id="killBtn" disabled>Kill process</button>
+            <button class="btn btn-ghost btn-sm" id="resumeBtn" disabled>Resume</button>
+          </div>
+          <p class="hint" id="hint">Tip: kill the process while a step is running.</p>
+        </div>
+
+        <!-- plan -->
+        <div class="c-col c-plan">
+          <h4>Plan &amp; checkpoints <span class="muted" id="planMeta"></span></h4>
+          <ol class="steps" id="steps"></ol>
+          <div class="crash" id="crashOverlay">
+            <div class="crash-card">
+              <span class="crash-code">exit 137 &middot; SIGKILL</span>
+              <h5>Operator process killed</h5>
+              <p>Task state is safe in the checkpoint store. Press <b>Resume</b> to continue.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- audit -->
+        <div class="c-col c-audit">
+          <h4>Audit log <span class="muted">append-only</span></h4>
+          <div class="log" id="log"></div>
+        </div>
+      </div>
+
+      <div class="report" id="report"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ARCHITECTURE ============ -->
+<section class="section arch">
+  <div class="wrap arch-grid">
+    <div>
+      <div class="sec-head left">
+        <span class="sec-tag">Architecture</span>
+        <h2>Four layers. None of them can skip the policy engine.</h2>
+        <p>Every tool call carries a workspace ID and passes through policy checks before it touches a website, an app or your money.</p>
+      </div>
+      <ul class="arch-list">
+        <li><b>Interfaces</b> Dashboard, phone approvals, voice and the emergency stop.</li>
+        <li><b>Orchestrator</b> Planner, policy engine, checkpointed task queue, verifier.</li>
+        <li><b>Tools</b> APIs, browser, desktop apps, documents and photos, research.</li>
+        <li><b>Workspaces</b> Separate data, vault, rules and history per business.</li>
+      </ul>
+    </div>
+    <div class="stack-3d" id="stack">
+      <div class="layer l4"><span>Workspaces</span><small>A &middot; B &middot; C &middot; &hellip; N</small></div>
+      <div class="layer l3"><span>Tools</span><small>API &middot; Browser &middot; Desktop &middot; Docs</small></div>
+      <div class="layer l2"><span>Orchestrator</span><small>Plan &middot; Policy &middot; Queue &middot; Verify</small></div>
+      <div class="layer l1"><span>Interfaces</span><small>Dashboard &middot; Phone &middot; Voice</small></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WORKSPACES ============ -->
+<section class="section" id="workspaces">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-tag">Workspaces</span>
+      <h2>Each business keeps its own data, logins, rules and history.</h2>
+      <p>One shared model server, no virtual machine per business. Isolation is enforced in code on every call &mdash; try to break it.</p>
+    </div>
+    <div class="ws-grid" id="wsGrid"></div>
+    <div class="ws-actions">
+      <button class="btn btn-ghost btn-sm" id="addWsBtn">Add workspace</button>
+      <button class="btn btn-danger btn-sm" id="crossBtn">Try a cross-workspace read</button>
+      <div class="ws-result" id="wsResult"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PHONE ============ -->
+<section class="section phone-sec" id="phone">
+  <div class="wrap phone-grid">
+    <div>
+      <div class="sec-head left">
+        <span class="sec-tag">Phone approvals</span>
+        <h2>When it needs a person, it parks the task and asks you.</h2>
+        <p>Notifications come from a self-hosted ntfy server on your PC, reached over your own VPN. No third party holds your data.</p>
+      </div>
+      <ul class="tick">
+        <li>Approve or reject an action over a spending limit</li>
+        <li>Complete a blocked step, such as an MFA code you permit</li>
+        <li>Other tasks keep running while one is parked</li>
+      </ul>
+      <p class="hint">Run the <b>tender</b> goal in the console. When it hits the A$20 per-action limit, the request appears on this phone.</p>
+    </div>
+    <div class="phone-stage">
+      <div class="phone" id="phoneEl">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <div class="ph-status"><span id="phTime">9:41</span><span>VPN &middot; 5G</span></div>
+          <div class="ph-app">Operator</div>
+          <div class="ph-list" id="phList">
+            <div class="ph-empty">No requests right now.<br><small>Run the tender goal in the console.</small></div>
+          </div>
+        </div>
+      </div>
+      <div class="phone-shadow"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CALL ASSIST ============ -->
+<section class="section" id="call">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-tag">Live call assist</span>
+      <h2>Transcribed locally. Suggested answers on screen in seconds.</h2>
+      <p>Speech and a small answer model get GPU priority, so background tasks slow down &mdash; not your call.</p>
+    </div>
+
+    <div class="call">
+      <div class="call-left">
+        <div class="call-head">
+          <div><b>Incoming call</b><span class="muted"> &middot; Business A &middot; recorded with consent</span></div>
+          <button class="btn btn-gold btn-sm" id="callBtn">Start call</button>
+        </div>
+        <canvas id="wave" height="64"></canvas>
+        <div class="transcript" id="transcript"><p class="muted">Press start to play a sample call.</p></div>
+      </div>
+      <div class="call-right">
+        <h4>Suggested answer</h4>
+        <div class="suggest" id="suggest"><p class="muted">Waiting for a question&hellip;</p></div>
+        <div class="lat">
+          <div><label>Speech to screen</label><b id="latNow">-</b></div>
+          <div><label>Average</label><b id="latAvg">-</b></div>
+          <div><label>Target</label><b>&lt; 3.0 s</b></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LEARNING ============ -->
+<section class="section" id="learn">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-tag">Learning from demonstration</span>
+      <h2>Show it three times. It writes the procedure. You test it.</h2>
+      <p>No developer for each new procedure. Success rates are measured on supervised runs and reported as they are.</p>
+    </div>
+
+    <div class="learn">
+      <div class="demos">
+        <div class="demo-card"><span class="dn">Demo 1</span><p>Invoice from Coastal Supplies, INV-1042, A$1,280.00</p></div>
+        <div class="demo-card"><span class="dn">Demo 2</span><p>Invoice from Harbour Freight Co, INV-77310, A$412.50</p></div>
+        <div class="demo-card"><span class="dn">Demo 3</span><p>Invoice from Red Gum Timber, RG-2208, A$3,905.10</p></div>
+      </div>
+      <div class="arrow-down"></div>
+      <div class="proc">
+        <div class="proc-head"><b>Procedure: enter supplier invoice</b><span class="pill">v1 &middot; learned</span></div>
+        <ol class="proc-steps">
+          <li>Open <code>Accounts &rarr; Bills &rarr; New</code></li>
+          <li>Find supplier <code>{supplier}</code> &mdash; if missing, <em>stop and ask</em></li>
+          <li>Enter <code>{invoice_no}</code>, <code>{date}</code>, <code>{amount}</code> incl. GST</li>
+          <li>Attach the source PDF or photo</li>
+          <li>Verify: bill appears in list with matching total</li>
+        </ol>
+      </div>
+      <div class="tests">
+        <div class="tests-head">
+          <b>Supervised test runs</b>
+          <button class="btn btn-ghost btn-sm" id="testBtn">Run 5 unseen cases</button>
+        </div>
+        <div class="test-row" id="testRow"></div>
+        <div class="test-sum" id="testSum"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PHASES ============ -->
+<section class="section" id="phases">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-tag">Delivery</span>
+      <h2>Fixed-price phases. Paid when the test passes.</h2>
+      <p>Tests use cases I have not seen. Prices in AUD.</p>
+    </div>
+    <div class="phases">
+      <article class="phase"><div class="ph-n">0</div><h3>Discovery</h3><p class="ph-price">A$1,200 <span>&middot; 3 days</span></p><p>Architecture, model choice, hardware spec, test plan, fixed quote.</p><div class="ph-test"><b>Test</b> Local model is killed mid-task and resumes without repeating a step.</div></article>
+      <article class="phase"><div class="ph-n">1</div><h3>Core platform</h3><p class="ph-price">A$3,000 <span>&middot; 2 weeks</span></p><p>Dashboard, two workspaces, permissions, audit log, backups, emergency stop.</p><div class="ph-test"><b>Test</b> Cloud off, unseen tasks pass, no data crosses, no duplicate actions.</div></article>
+      <article class="phase"><div class="ph-n">2</div><h3>Web &amp; desktop</h3><p class="ph-price">A$3,200 <span>&middot; 2 weeks</span></p><p>Systems with no integration, forms from documents and photos, phone approvals.</p><div class="ph-test"><b>Test</b> Agreed success rate, failures reported, phone step resumes the task.</div></article>
+      <article class="phase"><div class="ph-n">3</div><h3>Learning &amp; calls</h3><p class="ph-price">A$2,800 <span>&middot; 2 weeks</span></p><p>Procedures from demonstration, live call transcription and answers.</p><div class="ph-test"><b>Test</b> You teach an unseen procedure; answers within agreed delay.</div></article>
+      <article class="phase"><div class="ph-n">4</div><h3>Handover</h3><p class="ph-price">A$1,800 <span>&middot; 1 week</span></p><p>Security review, restore drill, documentation, training, all code.</p><div class="ph-test"><b>Test</b> Restore to a clean drive, injection tests pass, credentials changed.</div></article>
+    </div>
+
+    <div class="hw">
+      <div><label>Graphics</label><b>3 &times; AMD 32GB</b><span>ROCm &middot; llama.cpp / vLLM</span></div>
+      <div><label>Minimum</label><b>48GB VRAM</b><span>planner + vision + speech</span></div>
+      <div><label>System RAM</label><b>64GB</b><span>as requested</span></div>
+      <div><label>Ownership</label><b>100% yours</b><span>your repo from day one</span></div>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap foot-inner">
+    <div>
+      <div class="brand"><span class="brand-mark"><i></i></span><span>Local AI Operator</span></div>
+      <p class="muted small">Interactive concept demo. All data, timings and results on this page are simulated to show the planned behaviour. Real numbers are measured in Phase 0.</p>
+    </div>
+    <div class="small muted foot-right">
+      <p>Built by Aleksandar &middot; <a href="https://github.com/perfectcode537">github.com/perfectcode537</a></p>
+      <p>Background video: Mixkit (free licence). 3D: three.js.</p>
+    </div>
+  </div>
+</footer>
+
+<script type="module" src="js/scene.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
