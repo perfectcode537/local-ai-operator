@@ -25,6 +25,7 @@
     </a>
     <nav class="nav-links">
       <a href="#console">Console</a>
+      <a href="#work">Work</a>
       <a href="#workspaces">Workspaces</a>
       <a href="#phone">Approvals</a>
       <a href="#call">Call assist</a>
@@ -62,6 +63,14 @@
     </div>
   </div>
   <div class="scroll-hint"><span></span></div>
+</section>
+
+<div class="wave" aria-hidden="true"><svg viewBox="0 0 1440 120" preserveAspectRatio="none"><path class="w1" d="M0,60 C240,110 480,10 720,60 C960,110 1200,10 1440,60 C1680,110 1920,10 2160,60 C2400,110 2640,10 2880,60"/><path class="w2" d="M0,70 C240,20 480,120 720,70 C960,20 1200,120 1440,70 C1680,20 1920,120 2160,70 C2400,20 2640,120 2880,70"/><path class="w3" d="M0,64 C80,38 160,38 240,64 C320,90 400,90 480,64 C560,38 640,38 720,64 C800,90 880,90 960,64 C1040,38 1120,38 1200,64 C1280,90 1360,90 1440,64 C1520,38 1600,38 1680,64 C1760,90 1840,90 1920,64 C2000,38 2080,38 2160,64 C2240,90 2320,90 2400,64 C2480,38 2560,38 2640,64 C2720,90 2800,90 2880,64"/></svg></div>
+
+<!-- ============ IMAGE STREAM ============ -->
+<section class="stream" aria-label="Kinds of work the operator handles">
+  <div class="stream-track" data-row="0"></div>
+  <div class="stream-track rev" data-row="1"></div>
 </section>
 
 <!-- ============ PRINCIPLES ============ -->
@@ -168,6 +177,25 @@
   </div>
 </section>
 
+<!-- ============ AU BAND ============ -->
+<section class="au-band">
+  <div class="au-media"><img src="assets/img/brisbane-skyline.jpg" alt="Brisbane skyline across the river" data-parallax="0.18"></div>
+  <div class="au-shade"></div>
+  <div class="wrap au-inner">
+    <div class="au-copy" data-depth="0.08">
+      <span class="sec-tag">Made for Australian businesses</span>
+      <h2>Your office. Your data.<br><em>Your rules.</em></h2>
+      <p>Everything runs on one PC in your office. Cloud AI stays off until you switch it on for a task type.</p>
+    </div>
+    <div class="au-facts" data-depth="0.16">
+      <div class="glass"><b>AUD</b><span>budgets and limits</span></div>
+      <div class="glass"><b>DD/MM/YYYY</b><span>dates in every report</span></div>
+      <div class="glass"><b>GST</b><span>aware form rules</span></div>
+      <div class="glass"><b>On-site</b><span>data never leaves unless allowed</span></div>
+    </div>
+  </div>
+</section>
+
 <!-- ============ WORKSPACES ============ -->
 <section class="section" id="workspaces">
   <div class="wrap">
@@ -175,6 +203,10 @@
       <span class="sec-tag">Workspaces</span>
       <h2>Each business keeps its own data, logins, rules and history.</h2>
       <p>One shared model server, no virtual machine per business. Isolation is enforced in code on every call &mdash; try to break it.</p>
+    </div>
+    <div class="iso-stage">
+      <canvas id="iso" aria-label="3D view of isolated workspaces"></canvas>
+      <div class="iso-legend"><span><i class="lg-g"></i>workspace data</span><span><i class="lg-y"></i>policy wall</span><span><i class="lg-r"></i>denied request</span></div>
     </div>
     <div class="ws-grid" id="wsGrid"></div>
     <div class="ws-actions">
@@ -185,8 +217,23 @@
   </div>
 </section>
 
+<!-- ============ WORK GALLERY ============ -->
+<section class="section work" id="work">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-tag">A day of work</span>
+      <h2>One operator. Many kinds of work. Every result checked.</h2>
+      <p>Each card is a task from the brief, shown with the status the operator would report.</p>
+    </div>
+    <div class="masonry" id="masonry"></div>
+  </div>
+</section>
+
+<div class="wave flip" aria-hidden="true"><svg viewBox="0 0 1440 120" preserveAspectRatio="none"><path class="w1" d="M0,60 C240,110 480,10 720,60 C960,110 1200,10 1440,60 C1680,110 1920,10 2160,60 C2400,110 2640,10 2880,60"/><path class="w2" d="M0,70 C240,20 480,120 720,70 C960,20 1200,120 1440,70 C1680,20 1920,120 2160,70 C2400,20 2640,120 2880,70"/><path class="w3" d="M0,64 C80,38 160,38 240,64 C320,90 400,90 480,64 C560,38 640,38 720,64 C800,90 880,90 960,64 C1040,38 1120,38 1200,64 C1280,90 1360,90 1440,64 C1520,38 1600,38 1680,64 C1760,90 1840,90 1920,64 C2000,38 2080,38 2160,64 C2240,90 2320,90 2400,64 C2480,38 2560,38 2640,64 C2720,90 2800,90 2880,64"/></svg></div>
+
 <!-- ============ PHONE ============ -->
 <section class="section phone-sec" id="phone">
+  <div class="phone-bg"><img src="assets/img/phone-hands.jpg" alt="" data-parallax="0.12"></div>
   <div class="wrap phone-grid">
     <div>
       <div class="sec-head left">
@@ -226,6 +273,13 @@
       <p>Speech and a small answer model get GPU priority, so background tasks slow down &mdash; not your call.</p>
     </div>
 
+    <div class="call-banner" data-tilt="4">
+      <img src="assets/img/call-team.jpg" alt="Staff on a customer call" data-parallax="0.08">
+      <div class="float-chip c1" data-depth="0.5"><span class="who-c">CALLER</span>&ldquo;When will order 50213 be delivered?&rdquo;</div>
+      <div class="float-chip c2" data-depth="0.9"><span class="who-s">SUGGESTED &middot; 1.9 s</span>Thursday 16/10, 8 am - 12 pm. Driver texts 30 min before.</div>
+      <div class="float-chip c3" data-depth="0.3"><span class="who-k">LOCAL</span>Whisper &middot; GPU priority</div>
+    </div>
+
     <div class="call">
       <div class="call-left">
         <div class="call-head">
@@ -259,9 +313,9 @@
 
     <div class="learn">
       <div class="demos">
-        <div class="demo-card"><span class="dn">Demo 1</span><p>Invoice from Coastal Supplies, INV-1042, A$1,280.00</p></div>
-        <div class="demo-card"><span class="dn">Demo 2</span><p>Invoice from Harbour Freight Co, INV-77310, A$412.50</p></div>
-        <div class="demo-card"><span class="dn">Demo 3</span><p>Invoice from Red Gum Timber, RG-2208, A$3,905.10</p></div>
+        <div class="demo-card"><img src="assets/img/paper-stack.jpg" alt="" loading="lazy"><span class="dn">Demo 1</span><p>Invoice from Coastal Supplies, INV-1042, A$1,280.00</p></div>
+        <div class="demo-card"><img src="assets/img/bookkeeping.jpg" alt="" loading="lazy"><span class="dn">Demo 2</span><p>Invoice from Harbour Freight Co, INV-77310, A$412.50</p></div>
+        <div class="demo-card"><img src="assets/img/research-desk.jpg" alt="" loading="lazy"><span class="dn">Demo 3</span><p>Invoice from Red Gum Timber, RG-2208, A$3,905.10</p></div>
       </div>
       <div class="arrow-down"></div>
       <div class="proc">
@@ -312,6 +366,7 @@
 </section>
 
 <footer class="foot">
+  <div class="foot-bg"><img src="assets/img/sydney-towers.jpg" alt=""></div>
   <div class="wrap foot-inner">
     <div>
       <div class="brand"><span class="brand-mark"><i></i></span><span>Local AI Operator</span></div>
@@ -319,12 +374,14 @@
     </div>
     <div class="small muted foot-right">
       <p>Built by Aleksandar &middot; <a href="https://github.com/perfectcode537">github.com/perfectcode537</a></p>
-      <p>Background video: Mixkit (free licence). 3D: three.js.</p>
+      <p>Video and photos: Mixkit (free licence), colour graded. 3D: three.js.</p>
     </div>
   </div>
 </footer>
 
 <script type="module" src="js/scene.js"></script>
+<script type="module" src="js/iso.js"></script>
 <script src="js/app.js"></script>
+<script src="js/effects.js"></script>
 </body>
 </html>

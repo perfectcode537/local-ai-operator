@@ -198,6 +198,31 @@ dustGeo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
 const dust = new THREE.Points(dustGeo, new THREE.PointsMaterial({ color: 0x8EA398, size: 0.035, transparent: true, opacity: 0.6 }));
 root.add(dust);
 
+// ---------- data columns (instanced) ----------
+const COLS = 64;
+const colGeo = new THREE.BoxGeometry(0.07, 1, 0.07);
+colGeo.translate(0, 0.5, 0);
+const colMat = new THREE.MeshStandardMaterial({ color: GREEN, emissive: GREEN, emissiveIntensity: 0.35, transparent: true, opacity: 0.28 });
+const columns = new THREE.InstancedMesh(colGeo, colMat, COLS);
+const colData = [];
+const m4 = new THREE.Matrix4();
+for (let i = 0; i < COLS; i++) {
+  const a = (i / COLS) * Math.PI * 2;
+  const r = 6.2 + (i % 3) * 0.6;
+  colData.push({ x: Math.cos(a) * r, z: Math.sin(a) * r, ph: Math.random() * 6.28, sp: 0.6 + Math.random() * 1.4 });
+}
+columns.position.y = -1.2;
+root.add(columns);
+
+// ---------- orbiting rings ----------
+const orbitA = new THREE.Mesh(new THREE.TorusGeometry(2.7, 0.012, 8, 160), new THREE.MeshBasicMaterial({ color: GOLD, transparent: true, opacity: 0.55 }));
+const orbitB = new THREE.Mesh(new THREE.TorusGeometry(3.1, 0.008, 8, 160), new THREE.MeshBasicMaterial({ color: GREEN, transparent: true, opacity: 0.6 }));
+orbitA.position.y = orbitB.position.y = 0.1;
+root.add(orbitA, orbitB);
+const sat = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowGold, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending }));
+sat.scale.set(0.6, 0.6, 1);
+root.add(sat);
+
 // ---------- layout ----------
 function resize() {
   const w = hero.clientWidth;
@@ -225,6 +250,9 @@ window.addEventListener('pointermove', (e) => {
   mouse.tx = (e.clientX / window.innerWidth) * 2 - 1;
   mouse.ty = (e.clientY / window.innerHeight) * 2 - 1;
 });
+
+let scrollK = 0;
+window.addEventListener('scroll', () => { scrollK = Math.min(1, window.scrollY / Math.max(1, hero.clientHeight)); }, { passive: true });
 
 let visible = true;
 new IntersectionObserver(([en]) => { visible = en.isIntersecting; }, { threshold: 0 }).observe(hero);
@@ -284,6 +312,23 @@ function tick() {
   }
 
   dust.rotation.y = t * 0.01;
+
+  for (let i = 0; i < COLS; i++) {
+    const c = colData[i];
+    const h = 0.1 + (0.5 + 0.5 * Math.sin(t * c.sp + c.ph)) * 0.9;
+    m4.makeScale(1, h, 1).setPosition(c.x, 0, c.z);
+    columns.setMatrixAt(i, m4);
+  }
+  columns.instanceMatrix.needsUpdate = true;
+
+  orbitA.rotation.set(Math.PI / 2 + Math.sin(t * 0.4) * 0.35, t * 0.3, 0);
+  orbitB.rotation.set(Math.PI / 2.4, -t * 0.22, Math.cos(t * 0.3) * 0.3);
+  sat.position.set(Math.cos(t * 0.9) * 2.7, 0.1 + Math.sin(t * 0.9) * 0.9, Math.sin(t * 0.9) * 2.7);
+
+  // scroll dolly: the camera flies over the core as the page scrolls
+  camera.position.set(0, 4.2 + scrollK * 5, 13 - scrollK * 5);
+  camera.lookAt(0, 0.6 - scrollK * 1.2, 0);
+  canvas.style.opacity = String((window.innerWidth > 980 ? 1 : 0.35) * (1 - scrollK * 0.85));
   renderer.render(scene, camera);
 }
 tick();

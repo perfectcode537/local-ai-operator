@@ -459,3 +459,188 @@ code { font-family: var(--mono); font-size: 0.86em; background: var(--panel-2); 
   .badge-sim { font-size: 10px; padding: 4px 8px; }
   .brand { font-size: 15px; }
 }
+
+/* =================================================================
+   Imagery, flow and 3D layer
+   ================================================================= */
+
+/* ---------- flowing wave dividers ---------- */
+.wave { position: relative; height: 96px; margin: -48px 0; z-index: 3; pointer-events: none; overflow: hidden; }
+.wave svg { width: 100%; height: 100%; display: block; overflow: visible; }
+.wave path { fill: none; stroke-width: 1.6; vector-effect: non-scaling-stroke; }
+.wave .w1 { stroke: rgba(255, 205, 0, .55); animation: flow 22s linear infinite; }
+.wave .w2 { stroke: rgba(0, 166, 81, .7); animation: flow 30s linear infinite reverse; }
+.wave .w3 { stroke: rgba(232, 240, 236, .18); animation: flow 14s linear infinite; }
+.wave.flip { transform: scaleY(-1); }
+@keyframes flow { to { transform: translateX(-1440px); } }
+
+/* ---------- image stream ---------- */
+.stream {
+  position: relative; padding: 0 0 190px; margin: -30px 0 -70px; overflow: hidden;
+  perspective: 1400px;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+}
+.stream-track {
+  display: flex; gap: 18px; margin-bottom: 18px; width: max-content;
+  transform: rotateX(var(--tilt, 10deg)) rotateZ(-2.5deg);
+  transform-style: preserve-3d;
+}
+.stream-run { display: flex; gap: 18px; animation: marquee 70s linear infinite; transform-style: preserve-3d; }
+.stream-track.rev .stream-run { animation-direction: reverse; animation-duration: 85s; }
+.stream:hover .stream-run { animation-play-state: paused; }
+@keyframes marquee { to { transform: translateX(calc(-100% - 18px)); } }
+.tile {
+  position: relative; margin: 0; width: 340px; height: 214px; flex: none;
+  border-radius: 18px; overflow: hidden; border: 1px solid var(--line-2);
+  transition: transform .45s cubic-bezier(.2, .8, .2, 1), box-shadow .45s, border-color .3s;
+  box-shadow: 0 20px 40px -24px rgba(0, 0, 0, .9);
+}
+.tile img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 1.2s cubic-bezier(.2, .8, .2, 1); }
+.tile:hover { transform: translateY(-10px) translateZ(60px) rotateX(-6deg); border-color: rgba(255, 205, 0, .6); box-shadow: 0 40px 60px -24px rgba(0, 0, 0, .95); }
+.tile:hover img { transform: scale(1.08); }
+.tile figcaption {
+  position: absolute; inset: auto 0 0 0; padding: 40px 16px 14px;
+  background: linear-gradient(0deg, rgba(5, 14, 11, .92), transparent);
+  display: flex; flex-direction: column;
+}
+.tile figcaption b { font: 600 11px var(--mono); text-transform: uppercase; letter-spacing: .14em; color: var(--gold); }
+.tile figcaption span { font-size: 15px; font-weight: 600; }
+
+/* ---------- Australian band ---------- */
+.au-band { position: relative; min-height: 640px; display: flex; align-items: center; overflow: hidden; perspective: 1200px; }
+.au-media { position: absolute; inset: 0; overflow: hidden; }
+.au-media img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.25); will-change: transform; }
+.au-shade { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(5, 14, 11, .94) 0%, rgba(5, 14, 11, .55) 55%, rgba(5, 14, 11, .3) 100%), linear-gradient(0deg, var(--bg) 0%, transparent 25%, transparent 75%, var(--bg) 100%); }
+.au-inner { position: relative; display: grid; grid-template-columns: 1.1fr 1fr; gap: 50px; align-items: center; transform-style: preserve-3d; }
+.au-copy, .au-facts { transition: transform .6s cubic-bezier(.2, .8, .2, 1); transform-style: preserve-3d; }
+.au-copy h2 { font-size: clamp(34px, 4.6vw, 60px); line-height: 1.02; font-weight: 800; letter-spacing: -0.035em; }
+.au-copy h2 em { font-style: normal; color: var(--gold); }
+.au-copy p { color: #C6D4CD; font-size: 17px; margin-top: 18px; max-width: 460px; }
+.au-facts { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.glass {
+  padding: 20px; border-radius: 16px;
+  background: rgba(12, 29, 22, .45); border: 1px solid rgba(232, 240, 236, .16);
+  backdrop-filter: blur(14px) saturate(1.2); -webkit-backdrop-filter: blur(14px) saturate(1.2);
+  box-shadow: 0 30px 60px -30px rgba(0, 0, 0, .8), inset 0 1px 0 rgba(255, 255, 255, .06);
+}
+.glass b { display: block; font-size: 22px; font-weight: 800; color: var(--gold); }
+.glass span { font-size: 13.5px; color: #C6D4CD; }
+.au-facts .glass:nth-child(2) { transform: translateZ(40px); }
+.au-facts .glass:nth-child(3) { transform: translateZ(20px); }
+.au-facts .glass:nth-child(4) { transform: translateZ(60px); }
+
+/* ---------- isolation 3D stage ---------- */
+.iso-stage {
+  position: relative; height: 430px; margin-bottom: 22px; border-radius: 20px; overflow: hidden;
+  border: 1px solid var(--line-2);
+  background: radial-gradient(70% 90% at 50% 30%, rgba(0, 132, 61, .18), transparent 70%), linear-gradient(180deg, var(--panel), var(--bg-2));
+}
+.iso-stage canvas { width: 100%; height: 100%; display: block; }
+.iso-legend { position: absolute; left: 18px; bottom: 14px; display: flex; gap: 16px; flex-wrap: wrap; font: 500 12px var(--mono); color: var(--muted); }
+.iso-legend i { display: inline-block; width: 9px; height: 9px; border-radius: 2px; margin-right: 6px; }
+.lg-g { background: #4DD68F; } .lg-y { background: var(--gold); } .lg-r { background: var(--red); }
+
+/* ---------- workspace covers ---------- */
+.ws { overflow: hidden; }
+.ws-cover { margin: -20px -20px 16px; height: 118px; overflow: hidden; position: relative; }
+.ws-cover::after { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, var(--panel-2), transparent 70%); }
+.ws-cover img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 1s cubic-bezier(.2, .8, .2, 1); }
+.ws:hover .ws-cover img { transform: scale(1.1); }
+.ws-top { margin-top: -38px; position: relative; z-index: 1; }
+
+/* ---------- work gallery (waterfall) ---------- */
+.work { background: radial-gradient(900px 500px at 20% 10%, rgba(0, 132, 61, .1), transparent 70%); }
+.masonry { columns: 3; column-gap: 20px; }
+.m-card {
+  position: relative; break-inside: avoid; margin-bottom: 20px; border-radius: 20px; overflow: hidden;
+  border: 1px solid var(--line-2); background: linear-gradient(180deg, var(--panel-2), var(--bg-2));
+  transition: transform .3s ease, box-shadow .4s, border-color .3s;
+  box-shadow: 0 30px 60px -36px rgba(0, 0, 0, .9);
+}
+.m-card::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .3s;
+  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 205, 0, .14), transparent 45%);
+}
+.m-card:hover { border-color: rgba(255, 205, 0, .45); box-shadow: 0 50px 80px -40px rgba(0, 0, 0, .95); }
+.m-card:hover::after { opacity: 1; }
+.m-img { overflow: hidden; position: relative; }
+.m-img::after { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(8, 20, 15, .95), transparent 55%); }
+.m-card.tall .m-img { height: 360px; }
+.m-card.mid .m-img { height: 260px; }
+.m-card.short .m-img { height: 180px; }
+.m-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 1.4s cubic-bezier(.2, .8, .2, 1); }
+.m-card:hover .m-img img { transform: scale(1.08); }
+.m-body { padding: 0 20px 20px; margin-top: -54px; position: relative; z-index: 1; }
+.m-ws { display: flex; align-items: center; gap: 8px; font: 500 12px var(--mono); color: #C6D4CD; }
+.m-id { width: 24px; height: 24px; border-radius: 7px; display: grid; place-items: center; font: 800 12px var(--sans); background: var(--green); color: #00170A; }
+.m-card h3 { font-size: 20px; margin: 12px 0 6px; }
+.m-card p { font-size: 14.5px; color: var(--muted); }
+.m-st { display: inline-flex; align-items: center; gap: 7px; margin-top: 14px; font: 600 11.5px var(--mono); padding: 5px 10px; border-radius: 999px; }
+.m-st::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.m-st.ok { background: var(--green-soft); color: #4DD68F; }
+.m-st.wait { background: var(--gold-soft); color: var(--gold); }
+.m-st.fail { background: var(--red-soft); color: #FF8A80; }
+
+/* ---------- phone background ---------- */
+.phone-sec { overflow: hidden; }
+.phone-bg { position: absolute; inset: 0; overflow: hidden; opacity: .3; -webkit-mask-image: linear-gradient(90deg, transparent 20%, #000 70%); mask-image: linear-gradient(90deg, transparent 20%, #000 70%); }
+.phone-bg img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.25); filter: blur(1px); }
+.phone-grid { position: relative; z-index: 1; }
+
+/* ---------- call banner ---------- */
+.call-banner {
+  position: relative; height: 340px; border-radius: 20px; overflow: hidden; margin-bottom: 22px;
+  border: 1px solid var(--line-2); transform-style: preserve-3d; transition: transform .3s ease;
+}
+.call-banner > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: scale(1.25); }
+.call-banner::before { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(90deg, rgba(5, 14, 11, .2), rgba(5, 14, 11, .75)); }
+.float-chip {
+  position: absolute; z-index: 2; max-width: 330px; padding: 14px 16px; border-radius: 14px; font-size: 14.5px;
+  background: rgba(8, 20, 15, .62); border: 1px solid rgba(232, 240, 236, .18);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 30px 50px -20px rgba(0, 0, 0, .8);
+  transition: transform .4s cubic-bezier(.2, .8, .2, 1);
+  animation: bob 6s ease-in-out infinite;
+}
+.float-chip span { display: block; font: 600 10.5px var(--mono); letter-spacing: .1em; margin-bottom: 4px; }
+.who-c { color: var(--blue); } .who-s { color: var(--gold); } .who-k { color: #4DD68F; }
+.float-chip.c1 { right: 34%; top: 34px; }
+.float-chip.c2 { right: 28px; top: 120px; border-color: rgba(255, 205, 0, .5); animation-delay: -2s; }
+.float-chip.c3 { right: 44%; bottom: 30px; animation-delay: -4s; }
+@keyframes bob { 50% { translate: 0 -10px; } }
+
+/* ---------- demo thumbnails ---------- */
+.demo-card img { width: 100%; height: 110px; object-fit: cover; border-radius: 9px; display: block; margin-bottom: 12px; }
+
+/* ---------- footer image ---------- */
+.foot { position: relative; overflow: hidden; }
+.foot-bg { position: absolute; inset: 0; opacity: .14; -webkit-mask-image: linear-gradient(0deg, #000, transparent); mask-image: linear-gradient(0deg, #000, transparent); }
+.foot-bg img { width: 100%; height: 100%; object-fit: cover; object-position: center 30%; }
+.foot-inner { position: relative; }
+
+/* ---------- 3D entrances ---------- */
+.enter3d { opacity: 0; translate: 0 60px; rotate: x 32deg; transition: opacity .9s ease, translate 1s cubic-bezier(.2, .8, .2, 1), rotate 1s cubic-bezier(.2, .8, .2, 1), transform .3s ease, border-color .3s, box-shadow .4s; transition-delay: calc(var(--i, 0) * 90ms), calc(var(--i, 0) * 90ms), calc(var(--i, 0) * 90ms), 0s, 0s, 0s; }
+.enter3d.shown { opacity: 1; translate: 0 0; rotate: none; }
+.phase { position: relative; overflow: hidden; }
+.phase::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .3s;
+  background: radial-gradient(300px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 205, 0, .12), transparent 50%);
+}
+.phase:hover::after { opacity: 1; }
+.console { will-change: transform; transform-origin: 50% 0; }
+
+@media (max-width: 1100px) { .masonry { columns: 2; } }
+@media (max-width: 860px) {
+  .au-inner { grid-template-columns: 1fr; gap: 30px; }
+  .au-band { min-height: 0; padding: 90px 0; }
+  .iso-stage { height: 320px; }
+  .call-banner { height: 260px; }
+  .float-chip { font-size: 12.5px; max-width: 240px; }
+  .float-chip.c1 { right: auto; left: 16px; top: 16px; }
+  .float-chip.c2 { right: 16px; top: auto; bottom: 16px; }
+  .float-chip.c3 { display: none; }
+  .tile { width: 260px; height: 168px; }
+}
+@media (max-width: 560px) { .masonry { columns: 1; } }
+@media (prefers-reduced-motion: reduce) { .enter3d { opacity: 1; translate: none; rotate: none; } }

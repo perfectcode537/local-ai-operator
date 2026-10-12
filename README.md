@@ -30,9 +30,9 @@ Then open http://localhost:8000.
 ## Tech
 
 - HTML, CSS and plain JavaScript
-- three.js for the 3D scene
+- three.js for the 3D hero and the workspace isolation scene
 - Fonts: Inter and JetBrains Mono
 
 ## Credits
 
-Background video from [Mixkit](https://mixkit.co/) under the Mixkit free licence.
+Background video and photos from [Mixkit](https://mixkit.co/) under the Mixkit free licence, colour graded for this site.

@@ -390,22 +390,23 @@
 
   /* ================= WORKSPACES ================= */
   var WS = [
-    ['A', 'Coastal Retail', 'Retail and online store', 1240, 6, 18],
-    ['B', 'Harbour Property', 'Property management', 860, 4, 22],
-    ['C', 'Red Gum Trades', 'Trades and quoting', 530, 5, 11],
-    ['D', 'Southern Admin', 'Bookkeeping services', 2110, 8, 27]
+    ['A', 'Coastal Retail', 'Retail and online store', 1240, 6, 18, 'retail-payment'],
+    ['B', 'Harbour Property', 'Property management', 860, 4, 22, 'property-keys'],
+    ['C', 'Red Gum Trades', 'Trades and quoting', 530, 5, 11, 'site-works'],
+    ['D', 'Southern Admin', 'Bookkeeping services', 2110, 8, 27, 'bookkeeping']
   ];
   var EXTRA = [
-    ['E', 'Wattle Tenders', 'Government tenders'], ['F', 'Bayside Logistics', 'Freight and dispatch'],
-    ['G', 'Kestrel Health', 'Clinic admin'], ['H', 'Ironbark Supply', 'Wholesale'],
-    ['I', 'Banksia Events', 'Event bookings'], ['J', 'Mallee Farms', 'Agriculture'],
-    ['K', 'Jarrah Legal', 'Practice admin'], ['L', 'Sandstone Rentals', 'Equipment hire']
+    ['E', 'Wattle Tenders', 'Government tenders', 'blueprints'], ['F', 'Bayside Logistics', 'Freight and dispatch', 'freight'],
+    ['G', 'Kestrel Health', 'Clinic admin', 'paper-stack'], ['H', 'Ironbark Supply', 'Wholesale', 'warehouse'],
+    ['I', 'Banksia Events', 'Event bookings', 'open-office'], ['J', 'Mallee Farms', 'Agriculture', 'research-desk'],
+    ['K', 'Jarrah Legal', 'Practice admin', 'server-call'], ['L', 'Sandstone Rentals', 'Equipment hire', 'sydney-towers']
   ];
   var wsGrid = $('wsGrid');
   function wsCard(w) {
     var c = el('div', 'ws');
     c.dataset.id = w[0];
-    c.innerHTML = '<div class="ws-top"><span class="ws-id">' + w[0] + '</span><span class="pill">isolated</span></div>' +
+    c.innerHTML = '<div class="ws-cover"><img src="assets/img/' + w[6] + '.jpg" alt="" loading="lazy"></div>' +
+      '<div class="ws-top"><span class="ws-id">' + w[0] + '</span><span class="pill">isolated</span></div>' +
       '<h3>' + w[1] + '</h3><div class="ws-kind">' + w[2] + '</div>' +
       '<dl><div><dt>Documents</dt><dd>' + w[3].toLocaleString('en-AU') + '</dd></div>' +
       '<div><dt>Vault logins</dt><dd>' + w[4] + '</dd></div>' +
@@ -428,13 +429,15 @@
       $('addWsBtn').disabled = true;
       return;
     }
-    wsCard([w[0], w[1], w[2], 100 + Math.floor(Math.random() * 900), 2 + Math.floor(Math.random() * 6), 5 + Math.floor(Math.random() * 15)]);
+    wsCard([w[0], w[1], w[2], 100 + Math.floor(Math.random() * 900), 2 + Math.floor(Math.random() * 6), 5 + Math.floor(Math.random() * 15), w[3]]);
+    window.dispatchEvent(new CustomEvent('ws:add', { detail: { id: w[0], kind: w[2].split(' ')[0].toLowerCase() } }));
     var n = wsGrid.children.length;
     $('wsResult').innerHTML = '<span class="ok">workspace ' + w[0] + ' created &middot; ' + n + ' running on one PC, no VM per workspace</span>';
     log('<span class="k">[admin]</span> workspace ws:' + w[0] + ' created (schema, vault, browser profile)', 'ok');
   };
 
   $('crossBtn').onclick = function () {
+    window.dispatchEvent(new CustomEvent('ws:cross'));
     var b = wsGrid.querySelector('[data-id="B"]');
     b.classList.add('flash');
     setTimeout(function () { b.classList.remove('flash'); }, 1600);
