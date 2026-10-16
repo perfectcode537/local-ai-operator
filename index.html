@@ -2,386 +2,553 @@
 <html lang="en-AU">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Local AI Operator - Concept Demo</title>
-  <meta name="description" content="Interactive concept demo of a local AI operator: plain-English goals, checkpointed tasks, isolated workspaces, phone approvals, live call assist and honest reporting.">
-  <meta name="theme-color" content="#050E0B">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Operator - A local AI operator for your office</title>
+  <meta name="description" content="Concept demo of a local AI operator: one office PC that plans, acts, verifies and reports honestly across separate business workspaces.">
+  <meta name="theme-color" content="#070B09">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Operator - a local AI operator for your office">
+  <meta property="og:description" content="Interactive concept demo: plain-English goals, limits in code, crash-safe tasks, phone approvals and honest reports.">
+  <meta property="og:url" content="https://perfectcode537.github.io/local-ai-operator/">
+  <meta property="og:image" content="https://perfectcode537.github.io/local-ai-operator/assets/photo/og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23050E0B'/%3E%3Crect x='8' y='8' width='16' height='16' rx='3' fill='none' stroke='%23FFCD00' stroke-width='2.5'/%3E%3Crect x='13' y='13' width='6' height='6' rx='1' fill='%2300A651'/%3E%3C/svg%3E">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/site.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%230B1511'/%3E%3Ccircle cx='16' cy='16' r='7' fill='none' stroke='%23D9A62E' stroke-width='2.4'/%3E%3Ccircle cx='16' cy='16' r='2.4' fill='%23F4F1EA'/%3E%3C/svg%3E">
   <script type="importmap">
-    { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" } }
+    { "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+    } }
   </script>
 </head>
-<body>
+<body class="is-loading">
 
-<header class="nav" id="top">
-  <div class="wrap nav-inner">
-    <a href="#top" class="brand">
-      <span class="brand-mark"><i></i></span>
-      <span>Local AI Operator</span>
-    </a>
-    <nav class="nav-links">
-      <a href="#console">Console</a>
-      <a href="#work">Work</a>
-      <a href="#workspaces">Workspaces</a>
-      <a href="#phone">Approvals</a>
-      <a href="#call">Call assist</a>
-      <a href="#learn">Learning</a>
-      <a href="#phases">Phases</a>
-    </nav>
-    <span class="badge-sim">Concept demo &middot; simulated data</span>
+<!-- ========== LOADER ========== -->
+<div class="loader" aria-hidden="true">
+  <div class="lb-bar top"></div><div class="lb-bar bot"></div>
+  <div class="title-card">
+    <p class="tc-pre">Operator presents</p>
+    <div class="loader-word">A film about <em>quiet work</em></div>
+    <p class="tc-post">A local AI operator &middot; concept demo</p>
   </div>
+  <div class="loader-count"><span id="loadNum">0</span>%</div>
+</div>
+
+<!-- ========== CINEMA LAYER ========== -->
+<div class="grain" aria-hidden="true"></div>
+<div class="letterbox" aria-hidden="true"><i class="top"></i><i class="bot"></i></div>
+<div class="hud" aria-hidden="true"><span class="rec-dot"></span><span id="hudScene">SC 01</span><span id="hudTc">00:00:00:00</span><span id="hudName">Opening</span></div>
+
+<!-- ========== CURSOR ========== -->
+<div class="cursor" aria-hidden="true"><span class="cursor-label">View</span></div>
+
+<!-- ========== NAV ========== -->
+<header class="nav">
+  <a href="#top" class="logo" aria-label="Operator home">
+    <span class="logo-mark"><i></i></span><span class="logo-word">Operator</span>
+  </a>
+  <nav class="nav-links">
+    <a href="#how">How it works</a>
+    <a href="#abilities">Abilities</a>
+    <a href="#console">Live demo</a>
+    <a href="#workspaces">Workspaces</a>
+    <a href="#delivery">Delivery</a>
+  </nav>
+  <span class="nav-pill">Concept demo</span>
+  <a href="#start" class="btn btn-sm btn-ivory magnetic nav-cta"><span>Start Phase 0</span></a>
+  <button class="burger" aria-label="Open menu"><i></i><i></i></button>
 </header>
+<div class="menu" aria-hidden="true">
+  <a href="#how">How it works</a><a href="#abilities">Abilities</a><a href="#console">Live demo</a>
+  <a href="#workspaces">Workspaces</a><a href="#controls">Controls</a><a href="#delivery">Delivery</a><a href="#start">Start</a>
+</div>
 
-<!-- ============ HERO ============ -->
-<section class="hero">
-  <video class="hero-video" autoplay muted loop playsinline poster="assets/img/operator-poster.jpg">
-    <source src="assets/video/operator-loop.mp4" type="video/mp4">
-  </video>
-  <div class="hero-shade"></div>
-  <canvas id="scene" aria-hidden="true"></canvas>
+<main id="top">
 
-  <div class="wrap hero-inner">
-    <div class="hero-copy">
-      <p class="eyebrow"><span class="dot"></span>Always-on &middot; Local first &middot; Controlled in code</p>
-      <h1>One office PC.<br>One operator.<br><em>Every business in its own lane.</em></h1>
-      <p class="hero-sub">Give it an outcome in plain English. It plans the work, does it through APIs, websites and desktop apps, checks the real result, and tells you honestly what happened.</p>
-      <div class="hero-cta">
-        <a href="#console" class="btn btn-gold">Run the console demo</a>
-        <a href="#phases" class="btn btn-ghost">See the build phases</a>
-      </div>
+<!-- ========== HERO ========== -->
+<section data-scene="01 Opening" class="hero">
+  <div class="hero-glow" aria-hidden="true"></div>
+  <div class="hero-top" data-hero-fade>
+    <span>(01)</span><span>A local AI operator &mdash; concept demo</span><span class="ht-r"><span class="live"></span>Built for one office PC</span>
+  </div>
+  <h1 class="hero-title" data-hero-lines>
+    <span class="line l1"><span>Your office</span></span>
+    <span class="line l2"><span>work, <i class="pill pill-video"><video autoplay muted loop playsinline preload="auto" poster="assets/photo/hero-poster.jpg"><source src="assets/video/hero-film.mp4" type="video/mp4"></video></i> <em>done</em></span></span>
+    <span class="line l3"><span><em>quietly</em> &amp; reported</span></span>
+    <span class="line l4"><span>honestly. <i class="pill pill-img"><img src="assets/photo/servers.jpg" alt=""></i></span></span>
+  </h1>
+  <div class="hero-foot" data-hero-fade>
+    <p>Give it an outcome in plain English. It plans the work, does it through APIs, websites and desktop apps, checks the real result &mdash; and tells you what happened.</p>
+    <div class="hero-actions">
+      <a href="#console" class="btn btn-ink magnetic"><span>Run the live demo</span></a>
+      <a href="#how" class="btn btn-line-dark magnetic"><span>How it works</span></a>
     </div>
+    <a href="#reel" class="scroll-cue"><span></span>Scroll</a>
+  </div>
+</section>
 
-    <div class="hero-stats">
-      <div><b>0</b><span>steps repeated after a crash</span></div>
-      <div><b>10+</b><span>workspaces on one PC</span></div>
-      <div><b>&lt; 3 s</b><span>call answer target</span></div>
-      <div><b>100%</b><span>actions in the audit log</span></div>
+<!-- ========== FILM ========== -->
+<section data-scene="02 The reel" class="film" id="reel">
+  <div class="film-sticky">
+    <div class="film-frame">
+      <video class="hero-video" autoplay muted loop playsinline preload="auto" poster="assets/photo/hero-poster.jpg"><source src="assets/video/hero-film.mp4" type="video/mp4"></video>
+      <div class="film-grade"></div>
+      <div class="film-cap">
+        <span class="film-tag"><i></i>Reel &middot; 0:22</span>
+        <p class="film-line">One PC. Every business <em>in its own lane.</em></p>
+      </div>
     </div>
   </div>
-  <div class="scroll-hint"><span></span></div>
 </section>
 
-<div class="wave" aria-hidden="true"><svg viewBox="0 0 1440 120" preserveAspectRatio="none"><path class="w1" d="M0,60 C240,110 480,10 720,60 C960,110 1200,10 1440,60 C1680,110 1920,10 2160,60 C2400,110 2640,10 2880,60"/><path class="w2" d="M0,70 C240,20 480,120 720,70 C960,20 1200,120 1440,70 C1680,20 1920,120 2160,70 C2400,20 2640,120 2880,70"/><path class="w3" d="M0,64 C80,38 160,38 240,64 C320,90 400,90 480,64 C560,38 640,38 720,64 C800,90 880,90 960,64 C1040,38 1120,38 1200,64 C1280,90 1360,90 1440,64 C1520,38 1600,38 1680,64 C1760,90 1840,90 1920,64 C2000,38 2080,38 2160,64 C2240,90 2320,90 2400,64 C2480,38 2560,38 2640,64 C2720,90 2800,90 2880,64"/></svg></div>
-
-<!-- ============ IMAGE STREAM ============ -->
-<section class="stream" aria-label="Kinds of work the operator handles">
-  <div class="stream-track" data-row="0"></div>
-  <div class="stream-track rev" data-row="1"></div>
+<!-- ========== MARQUEE ========== -->
+<section class="marquee" aria-hidden="true">
+  <div class="mq-row"><div class="mq-track"><span>Plan</span><b class="mq-pill"><img src="assets/photo/p-handshake.jpg" alt=""></b><em>Act</em><b class="mq-pill"><video autoplay muted loop playsinline preload="none" poster="assets/photo/poster-pill-laptops.jpg"><source src="assets/video/pill-laptops.mp4" type="video/mp4"></video></b><span>Verify</span><b class="mq-pill"><img src="assets/photo/p-charts.jpg" alt=""></b><em>Report</em><b class="mq-pill"><img src="assets/photo/g-florist.jpg" alt=""></b><span>Plan</span><b class="mq-pill"><img src="assets/photo/p-handshake.jpg" alt=""></b><em>Act</em><b class="mq-pill"><video autoplay muted loop playsinline preload="none" poster="assets/photo/poster-pill-laptops.jpg"><source src="assets/video/pill-laptops.mp4" type="video/mp4"></video></b><span>Verify</span><b class="mq-pill"><img src="assets/photo/p-charts.jpg" alt=""></b><em>Report</em><b class="mq-pill"><img src="assets/photo/g-florist.jpg" alt=""></b></div></div>
+  <div class="mq-row rev"><div class="mq-track"><span>Limits in code</span><i></i><span>Never loses a task</span><i></i><span>Honest reports</span><i></i><span>Local first</span><i></i><span>Limits in code</span><i></i><span>Never loses a task</span><i></i><span>Honest reports</span><i></i><span>Local first</span><i></i></div></div>
 </section>
 
-<!-- ============ PRINCIPLES ============ -->
-<section class="principles wrap">
-  <div class="p-item"><span class="p-k">01</span><h3>The model proposes. The code decides.</h3><p>Budgets, permissions and approvals are enforced by the platform, never by trusting the model.</p></div>
-  <div class="p-item"><span class="p-k">02</span><h3>Verified, not assumed.</h3><p>A task is complete only when the real system shows the result. Confidence scores are not evidence.</p></div>
-  <div class="p-item"><span class="p-k">03</span><h3>Failures are reported as failures.</h3><p>Blocked work is parked, retried later, and handed to a person when it needs one.</p></div>
+<!-- ========== STATEMENT ========== -->
+<section data-scene="03 The idea" class="statement" id="about">
+  <div class="container">
+    <div class="statement-top">
+      <div class="st-side">
+        <p class="kicker" data-reveal>(02) The idea</p>
+        <p class="st-note" data-reveal>Built around one brief: a reliable local operator for a few businesses &mdash; fewer than ten users, one PC, many workspaces.</p>
+      </div>
+      <p class="statement-text" data-words>One dedicated PC in your office runs an operator you direct in plain English. It works inside the budget and limits you set, keeps every business in its own workspace, parks what it cannot finish, and only calls a task complete when the real system shows the result.</p>
+    </div>
+    <div class="statement-media">
+      <figure class="sm-1" data-3d data-parallax="-12"><img src="assets/photo/typing.jpg" alt="Hands typing an instruction" data-img-reveal><figcaption>01 &middot; You give an outcome</figcaption></figure>
+      <figure class="sm-2" data-3d data-parallax="10"><img src="assets/photo/open-office.jpg" alt="An open office from above" data-img-reveal><figcaption>02 &middot; It works across your businesses</figcaption></figure>
+      <figure class="sm-3" data-3d data-parallax="-6"><img src="assets/photo/servers.jpg" alt="Server lights in the dark" data-img-reveal><figcaption>03 &middot; On your own hardware</figcaption></figure>
+    </div>
+    <div class="stats">
+      <div class="stat" data-reveal><b data-count="0">0</b><span>steps repeated after a crash</span></div>
+      <div class="stat" data-reveal><b data-count="12">0</b><span>workspaces on one PC in this demo</span></div>
+      <div class="stat" data-reveal><b><span data-count="3">0</span>s</b><span>target from speech to on-screen answer</span></div>
+      <div class="stat" data-reveal><b><span data-count="100">0</span>%</b><span>of actions written to the audit log</span></div>
+    </div>
+  </div>
 </section>
 
-<!-- ============ CONSOLE ============ -->
-<section class="section" id="console">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="sec-tag">Operator console</span>
-      <h2>Give a goal. Watch it plan, act, verify &mdash; and survive a crash.</h2>
-      <p>Pick a goal, run it, then press <b>Kill process</b> mid-task. On resume, completed steps are skipped from their checkpoints and nothing is done twice.</p>
+<!-- ========== HOW IT WORKS (pinned 3D) ========== -->
+<section data-scene="04 How it works" class="how" id="how">
+  <div class="how-pin">
+    <canvas id="core3d" aria-label="3D view of the operator planning, acting, verifying and reporting"></canvas>
+    <div class="how-ui">
+      <p class="kicker light">(03) How it works</p>
+      <div class="chapters">
+        <article class="chapter is-active" data-ch="0">
+          <span class="ch-n">01</span>
+          <h2>Plan</h2>
+          <p>Your goal, budget and limits become a short plan. The policy engine checks every step before anything runs.</p>
+        </article>
+        <article class="chapter" data-ch="1">
+          <span class="ch-n">02</span>
+          <h2>Act</h2>
+          <p>Steps run through APIs, browsers and desktop apps &mdash; the way a staff member would, with a checkpoint before and after.</p>
+        </article>
+        <article class="chapter" data-ch="2">
+          <span class="ch-n">03</span>
+          <h2>Verify</h2>
+          <p>The result is checked in the real system. A model&rsquo;s confidence is never treated as evidence.</p>
+        </article>
+        <article class="chapter" data-ch="3">
+          <span class="ch-n">04</span>
+          <h2>Report</h2>
+          <p>You get an honest report with the evidence &mdash; including every failure, reported as a failure.</p>
+        </article>
+      </div>
+      <div class="ch-progress"><i></i></div>
+      <ol class="ch-list"><li class="is-active">Plan</li><li>Act</li><li>Verify</li><li>Report</li></ol>
+    </div>
+  </div>
+</section>
+
+<!-- ========== ABILITIES ========== -->
+<section data-scene="05 Abilities" class="abilities" id="abilities">
+  <div class="container">
+    <div class="split-head">
+      <p class="kicker" data-reveal>(04) Abilities</p>
+      <h2 class="display" data-split>Everything on your list. <em>Nothing hidden.</em></h2>
+      <p class="lede" data-reveal>Twelve requirements from the brief. Hover a row to see it at work.</p>
+    </div>
+    <ol class="ab-list">
+      <li class="ab-row" data-img="assets/photo/retail-payment.jpg" data-reveal><span class="ab-n">01</span><h3>Answers with sources</h3><p>&ldquo;What were sales this month for business A?&rdquo; &mdash; answered from your own data, with the rows it used.</p><img class="ab-thumb" src="assets/photo/retail-payment.jpg" alt="" loading="lazy"><span class="ab-arrow"></span></li>
+      <li class="ab-row" data-img="assets/photo/research-woman.jpg" data-reveal><span class="ab-n">02</span><h3>Goals with rules</h3><p>One short instruction with a budget and limits. No step-by-step. Limits enforced in code.</p><img class="ab-thumb" src="assets/photo/research-woman.jpg" alt="" loading="lazy"><span class="ab-arrow"></span></li>
+      <li class="ab-row" data-img="assets/photo/freight.jpg" data-reveal><span class="ab-n">03</span><h3>Web and desktop, no integration</h3><p>Operates third-party websites and desktop apps the way your staff do.</p><img class="ab-thumb" src="assets/photo/freight.jpg" alt="" loading="lazy"><span class="ab-arrow"></span></li>
+      <li class="ab-row" data-img="assets/photo/paper-stack.jpg" data-reveal><span class="ab-n">04</span><h3>Admin from documents and photos</h3><p>Applies your written rules and fills in the right form. Unclear cases go to a person.</p><img class="ab-thumb" src="assets/photo/paper-stack.jpg" alt="" loading="lazy"><span class="ab-arrow"></span></li>
+      <li class="ab-row" data-img="assets/photo/blueprints.jpg" data-reveal><span class="ab-n">05</span><h3>Find, prepare, hold</h3><p>Watches listing sites, prepares a full response, and holds it for your review.</p><img class="ab-thumb" src="assets/photo/blueprints.jpg" alt="" loading="lazy"><span class="ab-arrow"></span></li>
+      <li class="ab-row" data-img="assets/photo/research-desk.jpg" data-reveal><span class="ab-n">06</span><h3>Research on a schedule</h3><p>Gathers information from the web and reports with sources, every Monday at 7 am.</p><img class="ab-thumb" src="assets/photo/research-desk.jpg" alt="" loading="lazy"><span class="ab-arrow"></span></li>
+      <li class="ab-row" data-img="assets/photo/call-agent.jpg" data-reveal><span class="ab-n">07</span><h3>Live call assistance</h3><p>Local transcription and a suggested answer on screen within a few seconds.</p><img class="ab-thumb" src="assets/photo/call-agent.jpg" alt="" loading="lazy"><span class="ab-arrow"></span></li>
+      <li class="ab-row" data-img="assets/photo/bookkeeping.jpg" data-reveal><span class="ab-n">08</span><h3>Learns your procedures</h3><p>From instructions, documents and a few demonstrations. No developer each time.</p><img class="ab-thumb" src="assets/photo/bookkeeping.jpg" alt="" loading="lazy"><span class="ab-arrow"></span></li>
+      <li class="ab-row" data-img="assets/photo/servers.jpg" data-reveal><span class="ab-n">09</span><h3>Never loses a task</h3><p>Parks a blocked task, keeps working on others, retries later.</p><img class="ab-thumb" src="assets/photo/servers.jpg" alt="" loading="lazy"><span class="ab-arrow"></span></li>
+      <li class="ab-row" data-img="assets/photo/phone-hands.jpg" data-reveal><span class="ab-n">10</span><h3>Phone approvals</h3><p>Approve, reject or complete a blocked step from your phone.</p><img class="ab-thumb" src="assets/photo/phone-hands.jpg" alt="" loading="lazy"><span class="ab-arrow"></span></li>
+      <li class="ab-row" data-img="assets/photo/open-office.jpg" data-reveal><span class="ab-n">11</span><h3>Many workspaces</h3><p>Each business keeps its own data, logins, rules and history.</p><img class="ab-thumb" src="assets/photo/open-office.jpg" alt="" loading="lazy"><span class="ab-arrow"></span></li>
+      <li class="ab-row" data-img="assets/photo/typing.jpg" data-reveal><span class="ab-n">12</span><h3>Hard controls</h3><p>Spending limits, approval gates, emergency stop and a full audit log.</p><img class="ab-thumb" src="assets/photo/typing.jpg" alt="" loading="lazy"><span class="ab-arrow"></span></li>
+    </ol>
+  </div>
+  <div class="ab-preview" aria-hidden="true"><img src="assets/photo/retail-payment.jpg" alt=""></div>
+</section>
+
+<!-- ========== LIVE CONSOLE ========== -->
+<section data-scene="06 Live demo" class="console-sec" id="console">
+  <div class="container">
+    <div class="sec-head split-head">
+      <p class="kicker" data-reveal>(05) Live demo</p>
+      <h2 class="display" data-split>Give it a goal. <em>Then try to break it.</em></h2>
+      <p class="lede" data-reveal>Run a task and press <b>Kill process</b> mid-step. On resume, verified steps are skipped from their checkpoints &mdash; nothing is done twice. When it hits a limit, the request appears on the phone.</p>
     </div>
 
-    <div class="console" id="consoleApp">
-      <!-- top bar -->
-      <div class="c-top">
-        <div class="c-dots"><i></i><i></i><i></i></div>
-        <div class="c-title">operator@office-pc &middot; <span id="wsLabel">Business A</span></div>
-        <div class="c-status"><span class="led" id="statusLed"></span><span id="statusText">Idle</span></div>
-        <button class="estop" id="estopBtn" title="Emergency stop">
-          <span class="estop-ring"></span>Emergency stop
-        </button>
-      </div>
-
-      <div class="c-grid">
-        <!-- goal -->
-        <div class="c-col c-goal">
-          <h4>Goal</h4>
-          <div class="presets" id="presets"></div>
-          <div class="goal-box" id="goalText"></div>
-
-          <div class="limits">
-            <div><label>Budget</label><b id="limBudget">-</b></div>
-            <div><label>Per-action limit</label><b id="limAction">-</b></div>
-            <div><label>Time limit</label><b id="limTime">-</b></div>
-            <div><label>Model</label><b>Local &middot; planner-32B</b></div>
-          </div>
-
-          <div class="spend">
-            <div class="spend-row"><span>Spent</span><span id="spendText">A$0 / A$0</span></div>
-            <div class="bar"><i id="spendBar"></i></div>
-          </div>
-
-          <div class="c-actions">
-            <button class="btn btn-gold btn-sm" id="runBtn">Run task</button>
-            <button class="btn btn-danger btn-sm" id="killBtn" disabled>Kill process</button>
-            <button class="btn btn-ghost btn-sm" id="resumeBtn" disabled>Resume</button>
-          </div>
-          <p class="hint" id="hint">Tip: kill the process while a step is running.</p>
+    <div class="console-wrap" data-reveal>
+      <div class="console" id="consoleApp">
+        <div class="c-top">
+          <div class="c-dots"><i></i><i></i><i></i></div>
+          <div class="c-title">operator@office-pc &middot; <span id="wsLabel">Business A</span></div>
+          <div class="c-status"><span class="led" id="statusLed"></span><span id="statusText">Idle</span></div>
+          <button class="estop" id="estopBtn"><span class="estop-ring"></span><span class="estop-t">Emergency stop</span></button>
         </div>
-
-        <!-- plan -->
-        <div class="c-col c-plan">
-          <h4>Plan &amp; checkpoints <span class="muted" id="planMeta"></span></h4>
-          <ol class="steps" id="steps"></ol>
-          <div class="crash" id="crashOverlay">
-            <div class="crash-card">
-              <span class="crash-code">exit 137 &middot; SIGKILL</span>
-              <h5>Operator process killed</h5>
-              <p>Task state is safe in the checkpoint store. Press <b>Resume</b> to continue.</p>
+        <div class="c-grid">
+          <div class="c-col c-goal">
+            <h4>Goal</h4>
+            <div class="presets" id="presets"></div>
+            <div class="goal-box" id="goalText"></div>
+            <div class="limits">
+              <div><label>Budget</label><b id="limBudget">-</b></div>
+              <div><label>Per action</label><b id="limAction">-</b></div>
+              <div><label>Time</label><b id="limTime">-</b></div>
+              <div><label>Model</label><b>Local</b></div>
             </div>
+            <div class="spend"><div class="spend-row"><span>Spent</span><span id="spendText">A$0</span></div><div class="bar"><i id="spendBar"></i></div></div>
+            <div class="c-actions">
+              <button class="btn btn-sm btn-gold" id="runBtn"><span>Run task</span></button>
+              <button class="btn btn-sm btn-danger" id="killBtn" disabled><span>Kill process</span></button>
+              <button class="btn btn-sm btn-line" id="resumeBtn" disabled><span>Resume</span></button>
+            </div>
+            <p class="hint" id="hint"></p>
+          </div>
+          <div class="c-col c-plan">
+            <h4>Plan &amp; checkpoints <span id="planMeta"></span></h4>
+            <ol class="steps" id="steps"></ol>
+            <div class="crash" id="crashOverlay"><div class="crash-card"><span>exit 137 &middot; SIGKILL</span><h5>Operator process killed</h5><p>Task state is safe in the checkpoint store. Press <b>Resume</b>.</p></div></div>
+          </div>
+          <div class="c-col c-audit">
+            <h4>Audit log <span>append-only</span></h4>
+            <div class="log" id="log"></div>
           </div>
         </div>
+        <div class="report" id="report"></div>
+      </div>
 
-        <!-- audit -->
-        <div class="c-col c-audit">
-          <h4>Audit log <span class="muted">append-only</span></h4>
-          <div class="log" id="log"></div>
+      <div class="phone-stage">
+        <div class="phone" id="phoneEl">
+          <div class="phone-island"></div>
+          <div class="phone-screen">
+            <div class="ph-status"><span id="phTime">9:41</span><span>VPN</span></div>
+            <div class="ph-head"><span class="logo-mark sm"><i></i></span>Operator</div>
+            <div class="ph-list" id="phList"><div class="ph-empty">No requests.<br><small>Run the tender goal.</small></div></div>
+          </div>
         </div>
+        <p class="phone-cap">Self-hosted notifications over your own VPN</p>
       </div>
-
-      <div class="report" id="report"></div>
     </div>
   </div>
 </section>
 
-<!-- ============ ARCHITECTURE ============ -->
-<section class="section arch">
-  <div class="wrap arch-grid">
-    <div>
-      <div class="sec-head left">
-        <span class="sec-tag">Architecture</span>
-        <h2>Four layers. None of them can skip the policy engine.</h2>
-        <p>Every tool call carries a workspace ID and passes through policy checks before it touches a website, an app or your money.</p>
+<!-- ========== WORKSPACES ========== -->
+<section data-scene="07 Workspaces" class="workspaces" id="workspaces">
+  <div class="ws-bg"><video autoplay muted loop playsinline preload="none" poster="assets/photo/poster-ws-city.jpg"><source src="assets/video/ws-city.mp4" type="video/mp4"></video></div>
+  <div class="container">
+    <div class="ws-head">
+      <div>
+        <p class="kicker light" data-reveal>(06) Workspaces</p>
+        <h2 class="display light" data-split>Every business <em>in its own lane.</em></h2>
       </div>
-      <ul class="arch-list">
-        <li><b>Interfaces</b> Dashboard, phone approvals, voice and the emergency stop.</li>
-        <li><b>Orchestrator</b> Planner, policy engine, checkpointed task queue, verifier.</li>
-        <li><b>Tools</b> APIs, browser, desktop apps, documents and photos, research.</li>
-        <li><b>Workspaces</b> Separate data, vault, rules and history per business.</li>
-      </ul>
+      <p class="lede light" data-reveal>Each business has its own data, logins, rules and history. One shared model server, no virtual machine per business. Isolation is enforced in code on every call.</p>
     </div>
-    <div class="stack-3d" id="stack">
-      <div class="layer l4"><span>Workspaces</span><small>A &middot; B &middot; C &middot; &hellip; N</small></div>
-      <div class="layer l3"><span>Tools</span><small>API &middot; Browser &middot; Desktop &middot; Docs</small></div>
-      <div class="layer l2"><span>Orchestrator</span><small>Plan &middot; Policy &middot; Queue &middot; Verify</small></div>
-      <div class="layer l1"><span>Interfaces</span><small>Dashboard &middot; Phone &middot; Voice</small></div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ AU BAND ============ -->
-<section class="au-band">
-  <div class="au-media"><img src="assets/img/brisbane-skyline.jpg" alt="Brisbane skyline across the river" data-parallax="0.18"></div>
-  <div class="au-shade"></div>
-  <div class="wrap au-inner">
-    <div class="au-copy" data-depth="0.08">
-      <span class="sec-tag">Made for Australian businesses</span>
-      <h2>Your office. Your data.<br><em>Your rules.</em></h2>
-      <p>Everything runs on one PC in your office. Cloud AI stays off until you switch it on for a task type.</p>
-    </div>
-    <div class="au-facts" data-depth="0.16">
-      <div class="glass"><b>AUD</b><span>budgets and limits</span></div>
-      <div class="glass"><b>DD/MM/YYYY</b><span>dates in every report</span></div>
-      <div class="glass"><b>GST</b><span>aware form rules</span></div>
-      <div class="glass"><b>On-site</b><span>data never leaves unless allowed</span></div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ WORKSPACES ============ -->
-<section class="section" id="workspaces">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="sec-tag">Workspaces</span>
-      <h2>Each business keeps its own data, logins, rules and history.</h2>
-      <p>One shared model server, no virtual machine per business. Isolation is enforced in code on every call &mdash; try to break it.</p>
-    </div>
-    <div class="iso-stage">
+    <div class="iso-stage" data-reveal>
       <canvas id="iso" aria-label="3D view of isolated workspaces"></canvas>
-      <div class="iso-legend"><span><i class="lg-g"></i>workspace data</span><span><i class="lg-y"></i>policy wall</span><span><i class="lg-r"></i>denied request</span></div>
-    </div>
-    <div class="ws-grid" id="wsGrid"></div>
-    <div class="ws-actions">
-      <button class="btn btn-ghost btn-sm" id="addWsBtn">Add workspace</button>
-      <button class="btn btn-danger btn-sm" id="crossBtn">Try a cross-workspace read</button>
-      <div class="ws-result" id="wsResult"></div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ WORK GALLERY ============ -->
-<section class="section work" id="work">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="sec-tag">A day of work</span>
-      <h2>One operator. Many kinds of work. Every result checked.</h2>
-      <p>Each card is a task from the brief, shown with the status the operator would report.</p>
-    </div>
-    <div class="masonry" id="masonry"></div>
-  </div>
-</section>
-
-<div class="wave flip" aria-hidden="true"><svg viewBox="0 0 1440 120" preserveAspectRatio="none"><path class="w1" d="M0,60 C240,110 480,10 720,60 C960,110 1200,10 1440,60 C1680,110 1920,10 2160,60 C2400,110 2640,10 2880,60"/><path class="w2" d="M0,70 C240,20 480,120 720,70 C960,20 1200,120 1440,70 C1680,20 1920,120 2160,70 C2400,20 2640,120 2880,70"/><path class="w3" d="M0,64 C80,38 160,38 240,64 C320,90 400,90 480,64 C560,38 640,38 720,64 C800,90 880,90 960,64 C1040,38 1120,38 1200,64 C1280,90 1360,90 1440,64 C1520,38 1600,38 1680,64 C1760,90 1840,90 1920,64 C2000,38 2080,38 2160,64 C2240,90 2320,90 2400,64 C2480,38 2560,38 2640,64 C2720,90 2800,90 2880,64"/></svg></div>
-
-<!-- ============ PHONE ============ -->
-<section class="section phone-sec" id="phone">
-  <div class="phone-bg"><img src="assets/img/phone-hands.jpg" alt="" data-parallax="0.12"></div>
-  <div class="wrap phone-grid">
-    <div>
-      <div class="sec-head left">
-        <span class="sec-tag">Phone approvals</span>
-        <h2>When it needs a person, it parks the task and asks you.</h2>
-        <p>Notifications come from a self-hosted ntfy server on your PC, reached over your own VPN. No third party holds your data.</p>
+      <div class="iso-ui">
+        <button class="btn btn-sm btn-ivory magnetic" id="addWsBtn"><span>Add a workspace</span></button>
+        <button class="btn btn-sm btn-danger-dark magnetic" id="crossBtn"><span>Try a cross-workspace read</span></button>
+        <span class="iso-msg" id="wsResult">4 workspaces &middot; 1 model server</span>
       </div>
-      <ul class="tick">
-        <li>Approve or reject an action over a spending limit</li>
-        <li>Complete a blocked step, such as an MFA code you permit</li>
-        <li>Other tasks keep running while one is parked</li>
+    </div>
+    <div class="ws-cards">
+      <article class="ws-card" data-3d><img src="assets/photo/retail-payment.jpg" alt="" loading="lazy"><div><span>A</span><h3>Coastal Retail</h3><p>Sales, stock, online orders</p></div></article>
+      <article class="ws-card" data-3d><img src="assets/photo/property-keys.jpg" alt="" loading="lazy"><div><span>B</span><h3>Harbour Property</h3><p>Leases, invoices, tenants</p></div></article>
+      <article class="ws-card" data-3d><img src="assets/photo/site-works.jpg" alt="" loading="lazy"><div><span>C</span><h3>Red Gum Trades</h3><p>Quotes, plans, site photos</p></div></article>
+      <article class="ws-card" data-3d><img src="assets/photo/warehouse.jpg" alt="" loading="lazy"><div><span>D</span><h3>Ironbark Supply</h3><p>Wholesale, freight, stock</p></div></article>
+    </div>
+  </div>
+</section>
+
+<!-- ========== CONTROLS ========== -->
+<section data-scene="08 Hard controls" class="controls" id="controls">
+  <div class="container">
+    <div class="sec-head split-head">
+      <p class="kicker" data-reveal>(07) Hard controls</p>
+      <h2 class="display" data-split>The model proposes. <em>The code decides.</em></h2>
+    </div>
+    <div class="bento">
+      <figure class="b-photo" data-3d><video autoplay muted loop playsinline preload="none" poster="assets/photo/poster-ctl-call.jpg"><source src="assets/video/ctl-call.mp4" type="video/mp4"></video><figcaption><b>Your PC. Your rules.</b><span>Nothing depends on anyone else&rsquo;s servers.</span></figcaption></figure>
+      <div class="b-tile" data-reveal><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="14"/><path d="M20 12v8l5 3"/></svg><h3>Spending limits</h3><p>Per task, per workspace and per day. Anything over a limit stops and asks.</p></div>
+      <div class="b-tile" data-reveal><svg viewBox="0 0 40 40"><rect x="9" y="17" width="22" height="15" rx="3"/><path d="M14 17v-4a6 6 0 0 1 12 0v4"/></svg><h3>Approval gates</h3><p>Payments, submissions and customer emails wait for a person.</p></div>
+      <div class="b-tile b-stop" data-reveal><button class="stop-btn" id="demoStop" aria-label="Emergency stop demo"><span>STOP</span></button><h3>Emergency stop</h3><p>One press on the dashboard or phone halts every task and locks the tools.</p></div>
+      <div class="b-tile" data-reveal><svg viewBox="0 0 40 40"><path d="M11 9h18v22H11z"/><path d="M15 15h10M15 20h10M15 25h6"/></svg><h3>Full audit log</h3><p>Every plan, tool call, screenshot, approval and result. Append-only.</p></div>
+      <div class="b-tile" data-reveal><svg viewBox="0 0 40 40"><path d="M10 26a10 10 0 1 1 3 6"/><path d="M10 32v-6h6"/></svg><h3>Backups and restore</h3><p>Nightly encrypted backups, with a restore drill tested onto a clean drive.</p></div>
+      <div class="b-tile" data-reveal><svg viewBox="0 0 40 40"><path d="M20 8l11 4v8c0 7-5 11-11 13-6-2-11-6-11-13v-8z"/><path d="M15 20l4 4 6-7"/></svg><h3>CAPTCHA and MFA</h3><p>It tries only what you permit, then pauses and notifies a person.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== WEEK ========== -->
+<section data-scene="09 A week" class="week" id="week">
+  <div class="week-pin">
+    <div class="week-head">
+      <p class="kicker">(08) A week with the operator</p>
+      <h2 class="display">Six days. <em>One honest log.</em></h2>
+      <div class="week-days"><span class="is-on">Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span></div>
+    </div>
+    <div class="cy-stage">
+      <div class="cy-ring">
+        <figure class="cy-panel" style="--n:0"><video autoplay muted loop playsinline preload="none" poster="assets/photo/poster-wk-mon.jpg"><source src="assets/video/wk-mon.mp4" type="video/mp4"></video><figcaption><span class="cy-day">Mon</span><span class="tri-st ok">Verified</span><b>Weekly plan approved</b><small>Business A &middot; 09:02</small></figcaption></figure>
+        <figure class="cy-panel" style="--n:1"><video autoplay muted loop playsinline preload="none" poster="assets/photo/poster-wk-tue.jpg"><source src="assets/video/wk-tue.mp4" type="video/mp4"></video><figcaption><span class="cy-day">Tue</span><span class="tri-st ok">Verified</span><b>38 invoices entered</b><small>Business B &middot; 2 to a person</small></figcaption></figure>
+        <figure class="cy-panel" style="--n:2"><video autoplay muted loop playsinline preload="none" poster="assets/photo/poster-wk-wed.jpg"><source src="assets/video/wk-wed.mp4" type="video/mp4"></video><figcaption><span class="cy-day">Wed</span><span class="tri-st ok">Verified</span><b>Market report shared</b><small>Business F &middot; 12 sources</small></figcaption></figure>
+        <figure class="cy-panel" style="--n:3"><video autoplay muted loop playsinline preload="none" poster="assets/photo/poster-wk-thu.jpg"><source src="assets/video/wk-thu.mp4" type="video/mp4"></video><figcaption><span class="cy-day">Thu</span><span class="tri-st run">Live</span><b>64 calls assisted</b><small>Business A &middot; 1.9 s average</small></figcaption></figure>
+        <figure class="cy-panel" style="--n:4"><video autoplay muted loop playsinline preload="none" poster="assets/photo/poster-wk-fri.jpg"><source src="assets/video/wk-fri.mp4" type="video/mp4"></video><figcaption><span class="cy-day">Fri</span><span class="tri-st wait">Approved</span><b>Proposal approved by phone</b><small>Business C &middot; A$25 gate</small></figcaption></figure>
+        <figure class="cy-panel" style="--n:5"><video autoplay muted loop playsinline preload="none" poster="assets/photo/poster-wk-sat.jpg"><source src="assets/video/wk-sat.mp4" type="video/mp4"></video><figcaption><span class="cy-day">Sat</span><span class="tri-st ok">Verified</span><b>Backup restored and checked</b><small>All workspaces &middot; 02:00</small></figcaption></figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FIELD ========== -->
+<section data-scene="10 Three jobs" class="field" id="field">
+  <div class="container">
+    <div class="split-head">
+      <p class="kicker" data-reveal>(09) While you&rsquo;re busy</p>
+      <h2 class="display" data-split>Three jobs, <em>running right now.</em></h2>
+    </div>
+    <div class="tri">
+      <figure class="tri-card" data-3d><video autoplay muted loop playsinline preload="none" poster="assets/photo/poster-tri-plan.jpg"><source src="assets/video/tri-plan.mp4" type="video/mp4"></video><figcaption><span class="tri-st ok">Verified</span><b>Monday plan approved</b><small>Business A &middot; 5 steps &middot; 09:02</small></figcaption></figure>
+      <figure class="tri-card" data-3d><video autoplay muted loop playsinline preload="none" poster="assets/photo/poster-tri-servers.jpg"><source src="assets/video/tri-servers.mp4" type="video/mp4"></video><figcaption><span class="tri-st run">Running</span><b>Nightly backup &amp; restore check</b><small>All workspaces &middot; 02:00</small></figcaption></figure>
+      <figure class="tri-card" data-3d><video autoplay muted loop playsinline preload="none" poster="assets/photo/poster-tri-meeting.jpg"><source src="assets/video/tri-meeting.mp4" type="video/mp4"></video><figcaption><span class="tri-st wait">Held for you</span><b>Client proposal drafted</b><small>Business B &middot; waiting for approval</small></figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- ========== CALL ASSIST ========== -->
+<section data-scene="11 Call assist" class="call" id="call">
+  <div class="container call-grid">
+    <div class="call-media" data-3d>
+      <video autoplay muted loop playsinline preload="metadata" poster="assets/photo/call-team.jpg"><source src="assets/video/call-film.mp4" type="video/mp4"></video>
+      <div class="caption-stack" id="captions"></div>
+      <div class="rec"><i></i>LIVE &middot; transcribed locally</div>
+    </div>
+    <div class="call-copy">
+      <p class="kicker" data-reveal>(10) Live call assistance</p>
+      <h2 class="display" data-split>The right answer, <em>on screen in seconds.</em></h2>
+      <p class="lede" data-reveal>Speech and a small answer model get priority on the graphics card, so background tasks slow down &mdash; not your call. Every suggestion shows the document it came from.</p>
+      <div class="lat" data-reveal>
+        <div><b>1.9 s</b><span>speech to screen, typical</span></div>
+        <div><b>&lt; 3 s</b><span>target under load</span></div>
+        <div><b>0</b><span>audio sent to the cloud</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== GALLERY ========== -->
+<section data-scene="12 A day at the office" class="gallery" id="gallery">
+  <div class="g-wrap">
+  <div class="g-title">
+    <p class="kicker" data-reveal>(11) A day at the office</p>
+    <h2 data-split>Quiet work, <em>everywhere at once.</em></h2>
+    <p class="g-note" data-reveal>Nine moments from one simulated day across six businesses &mdash; each with the status the operator would report.</p>
+    <div class="g-count" data-reveal><div><b>6</b><span>workspaces</span></div><div><b>41</b><span>tasks verified</span></div><div><b>2</b><span>handed to a person</span></div></div>
+  </div>
+  <div class="g-cols">
+    <div class="g-col" data-speed="-60">
+      <figure><img src="assets/photo/g-florist.jpg" alt="A florist's shop" loading="lazy"><figcaption>08:10 &middot; Yesterday&rsquo;s sales, with sources</figcaption></figure>
+      <figure><img src="assets/photo/g-signing.jpg" alt="Signing a lease" loading="lazy"><figcaption>09:20 &middot; 3 lease renewals prepared</figcaption></figure>
+      <figure><img src="assets/photo/g-warehouse-team.jpg" alt="Managers in a warehouse" loading="lazy"><figcaption>14:05 &middot; 214 stock lines checked</figcaption></figure>
+      <figure><img src="assets/photo/g-team.jpg" alt="A team around a laptop" loading="lazy"><figcaption>07:00 &middot; Weekly market report shared</figcaption></figure>
+      <figure><img src="assets/photo/g-overhead.jpg" alt="An office from above" loading="lazy"><figcaption>18:00 &middot; Daily report, honest as always</figcaption></figure>
+    </div>
+    <div class="g-col" data-speed="40">
+      <figure class="tall"><img src="assets/photo/g-call-centre.jpg" alt="A team taking calls" loading="lazy"><figcaption>10:12 &middot; Answer on screen in 1.9 s</figcaption></figure>
+      <figure><img src="assets/photo/g-invoices.jpg" alt="Reviewing invoices" loading="lazy"><figcaption>11:40 &middot; 4 of 5 invoices entered, 1 to a person</figcaption></figure>
+      <figure><img src="assets/photo/g-cranes.jpg" alt="Cranes over a building site" loading="lazy"><figcaption>15:30 &middot; Site quote held for approval</figcaption></figure>
+      <figure class="tall"><img src="assets/photo/g-approve.jpg" alt="Approving on a phone" loading="lazy"><figcaption>12:02 &middot; A$25 approved from a phone</figcaption></figure>
+    </div>
+  </div>
+  </div>
+</section>
+
+<!-- ========== DELIVERY ========== -->
+<section data-scene="13 Delivery" class="delivery" id="delivery">
+  <div class="container">
+    <div class="split-head">
+      <p class="kicker" data-reveal>(12) Delivery</p>
+      <h2 class="display" data-split>Five fixed-price stages. <em>Paid when the test passes.</em></h2>
+      <p class="lede" data-reveal>Tests use cases I have not seen. A model&rsquo;s confidence is never evidence.</p>
+    </div>
+    <div class="stack">
+      <article class="stage t-paper" style="--i:0">
+        <div class="st-col"><div class="st-num">0</div><figure class="st-media"><img src="assets/photo/p-charts.jpg" alt="" loading="lazy"></figure></div>
+        <div class="st-main">
+          <div class="st-meta"><span>Phase 0</span><span>24 h &middot; 3 days</span></div>
+          <h3>Discovery</h3>
+          <p>Architecture, model choice, hardware specification, test plan, fixed quote and a recorded proof run.</p>
+        </div>
+        <div class="st-side">
+          <b>A$1,200</b>
+          <div class="st-test"><i>Acceptance test</i>A local model is killed mid-task and resumes without repeating a completed step.</div>
+        </div>
+      </article>
+      <article class="stage t-sand" style="--i:1">
+        <div class="st-col"><div class="st-num">1</div><figure class="st-media"><img src="assets/photo/p-datacentre.jpg" alt="" loading="lazy"></figure></div>
+        <div class="st-main">
+          <div class="st-meta"><span>Phase 1</span><span>80 h &middot; 2 weeks</span></div>
+          <h3>Core platform</h3>
+          <p>Local models, dashboard, plain-English tasks, two workspaces, permissions, audit log, backups, emergency stop.</p>
+        </div>
+        <div class="st-side">
+          <b>A$3,000</b>
+          <div class="st-test"><i>Acceptance test</i>Cloud off, unseen tasks pass, no data crosses, a restart causes no duplicate actions.</div>
+        </div>
+      </article>
+      <article class="stage t-sage" style="--i:2">
+        <div class="st-col"><div class="st-num">2</div><figure class="st-media"><img src="assets/photo/p-laptops.jpg" alt="" loading="lazy"></figure></div>
+        <div class="st-main">
+          <div class="st-meta"><span>Phase 2</span><span>80 h &middot; 2 weeks</span></div>
+          <h3>Web &amp; desktop</h3>
+          <p>Systems with no integration, forms from documents and photos, parked-task retry, phone approvals.</p>
+        </div>
+        <div class="st-side">
+          <b>A$3,200</b>
+          <div class="st-test"><i>Acceptance test</i>Agreed success rate on fresh cases, failures reported, a phone step resumes the task.</div>
+        </div>
+      </article>
+      <article class="stage t-green" style="--i:3">
+        <div class="st-col"><div class="st-num">3</div><figure class="st-media"><img src="assets/photo/p-team.jpg" alt="" loading="lazy"></figure></div>
+        <div class="st-main">
+          <div class="st-meta"><span>Phase 3</span><span>80 h &middot; 2 weeks</span></div>
+          <h3>Learning &amp; calls</h3>
+          <p>Procedures learned from instructions, documents and demonstration. Live call transcription and answers.</p>
+        </div>
+        <div class="st-side">
+          <b>A$2,800</b>
+          <div class="st-test"><i>Acceptance test</i>You teach an unseen procedure; answers appear within the agreed delay.</div>
+        </div>
+      </article>
+      <article class="stage t-ink" style="--i:4">
+        <div class="st-col"><div class="st-num">4</div><figure class="st-media"><img src="assets/photo/p-handshake.jpg" alt="" loading="lazy"></figure></div>
+        <div class="st-main">
+          <div class="st-meta"><span>Phase 4</span><span>40 h &middot; 1 week</span></div>
+          <h3>Hardening &amp; handover</h3>
+          <p>Security review, prompt-injection tests, restore drill, documentation, training, all code and credentials.</p>
+        </div>
+        <div class="st-side">
+          <b>A$1,800</b>
+          <div class="st-test"><i>Acceptance test</i>Full restore onto a clean drive, injection tests pass, you change every admin credential.</div>
+        </div>
+      </article>
+    </div>
+    <div class="price-band">
+      <p class="kicker" data-reveal>In total &middot; full scope included</p>
+      <div class="pb-row">
+        <div class="pb-price" data-reveal>A$<span data-count="12000" data-format="thousands">0</span></div>
+        <a href="#start" class="btn btn-ink btn-lg magnetic pb-cta" data-reveal><span>Start with Phase 0</span></a>
+      </div>
+      <ul class="pb-facts" data-reveal>
+        <li><span>Hours</span><b>304 &middot; about 7.5 weeks</b></li>
+        <li><span>Graphics</span><b>3 &times; AMD 32GB</b></li>
+        <li><span>Minimum</span><b>48GB VRAM &middot; 64GB RAM</b></li>
+        <li><span>Code</span><b>Your repository, day one</b></li>
+        <li><span>Support</span><b>A$350 / month, optional</b></li>
       </ul>
-      <p class="hint">Run the <b>tender</b> goal in the console. When it hits the A$20 per-action limit, the request appears on this phone.</p>
-    </div>
-    <div class="phone-stage">
-      <div class="phone" id="phoneEl">
-        <div class="phone-notch"></div>
-        <div class="phone-screen">
-          <div class="ph-status"><span id="phTime">9:41</span><span>VPN &middot; 5G</span></div>
-          <div class="ph-app">Operator</div>
-          <div class="ph-list" id="phList">
-            <div class="ph-empty">No requests right now.<br><small>Run the tender goal in the console.</small></div>
-          </div>
-        </div>
-      </div>
-      <div class="phone-shadow"></div>
     </div>
   </div>
 </section>
 
-<!-- ============ CALL ASSIST ============ -->
-<section class="section" id="call">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="sec-tag">Live call assist</span>
-      <h2>Transcribed locally. Suggested answers on screen in seconds.</h2>
-      <p>Speech and a small answer model get GPU priority, so background tasks slow down &mdash; not your call.</p>
+<!-- ========== QUESTIONS ========== -->
+<section data-scene="14 Questions" class="faq" id="faq">
+  <div class="container faq-grid">
+    <div>
+      <p class="kicker" data-reveal>(13) Your questions</p>
+      <h2 class="display" data-split>Straight <em>answers.</em></h2>
+      <figure class="faq-img" data-3d><video autoplay muted loop playsinline preload="none" poster="assets/photo/poster-faq-laptop.jpg"><source src="assets/video/faq-laptop.mp4" type="video/mp4"></video></figure>
     </div>
-
-    <div class="call-banner" data-tilt="4">
-      <img src="assets/img/call-team.jpg" alt="Staff on a customer call" data-parallax="0.08">
-      <div class="float-chip c1" data-depth="0.5"><span class="who-c">CALLER</span>&ldquo;When will order 50213 be delivered?&rdquo;</div>
-      <div class="float-chip c2" data-depth="0.9"><span class="who-s">SUGGESTED &middot; 1.9 s</span>Thursday 16/10, 8 am - 12 pm. Driver texts 30 min before.</div>
-      <div class="float-chip c3" data-depth="0.3"><span class="who-k">LOCAL</span>Whisper &middot; GPU priority</div>
-    </div>
-
-    <div class="call">
-      <div class="call-left">
-        <div class="call-head">
-          <div><b>Incoming call</b><span class="muted"> &middot; Business A &middot; recorded with consent</span></div>
-          <button class="btn btn-gold btn-sm" id="callBtn">Start call</button>
-        </div>
-        <canvas id="wave" height="64"></canvas>
-        <div class="transcript" id="transcript"><p class="muted">Press start to play a sample call.</p></div>
-      </div>
-      <div class="call-right">
-        <h4>Suggested answer</h4>
-        <div class="suggest" id="suggest"><p class="muted">Waiting for a question&hellip;</p></div>
-        <div class="lat">
-          <div><label>Speech to screen</label><b id="latNow">-</b></div>
-          <div><label>Average</label><b id="latAvg">-</b></div>
-          <div><label>Target</label><b>&lt; 3.0 s</b></div>
-        </div>
-      </div>
+    <div class="acc">
+      <details data-reveal><summary>Does it run fully on AMD graphics cards?</summary><p>Yes. llama.cpp and vLLM run on ROCm, and Whisper runs locally. vLLM tensor parallel prefers 2 or 4 cards, so with 3 cards layers are split in llama.cpp, or each card gets its own job. Confirmed on your exact cards in Phase 0.</p></details>
+      <details data-reveal><summary>What is the minimum hardware?</summary><p>48GB of graphics memory and 64GB of system RAM. 96GB of graphics memory is recommended so all models stay loaded together.</p></details>
+      <details data-reveal><summary>How do 10 or more workspaces fit on one PC?</summary><p>One shared model server, with a separate database schema, vault, browser profiles and light container per workspace. The workspace ID is checked in code on every tool call.</p></details>
+      <details data-reveal><summary>What runs locally, and what would go to the cloud?</summary><p>Local: sourced answers, document and photo rules, known procedures, research summaries and transcription. Cloud, only if you switch it on: long planning on unfamiliar sites and hard vision.</p></details>
+      <details data-reveal><summary>How fast is live call assistance?</summary><p>Target 2 to 3 seconds from speech to on-screen answer, with GPU priority for speech. The exact figure is measured and agreed in Phase 0.</p></details>
+      <details data-reveal><summary>How do phone approvals stay private?</summary><p>A self-hosted ntfy server and approval page on your PC, reached over your own WireGuard VPN. No third party holds your data.</p></details>
+      <details data-reveal><summary>How well does learning from demonstration work?</summary><p>About 70 to 85% on first unsupervised runs after 3 to 5 demonstrations on a stable site, rising after corrections. Measured rates are reported, not promised.</p></details>
+      <details data-reveal><summary>Who writes the code?</summary><p>Only me, full time, about 40 hours per week, with daily commits to your repository.</p></details>
     </div>
   </div>
 </section>
 
-<!-- ============ LEARNING ============ -->
-<section class="section" id="learn">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="sec-tag">Learning from demonstration</span>
-      <h2>Show it three times. It writes the procedure. You test it.</h2>
-      <p>No developer for each new procedure. Success rates are measured on supervised runs and reported as they are.</p>
-    </div>
-
-    <div class="learn">
-      <div class="demos">
-        <div class="demo-card"><img src="assets/img/paper-stack.jpg" alt="" loading="lazy"><span class="dn">Demo 1</span><p>Invoice from Coastal Supplies, INV-1042, A$1,280.00</p></div>
-        <div class="demo-card"><img src="assets/img/bookkeeping.jpg" alt="" loading="lazy"><span class="dn">Demo 2</span><p>Invoice from Harbour Freight Co, INV-77310, A$412.50</p></div>
-        <div class="demo-card"><img src="assets/img/research-desk.jpg" alt="" loading="lazy"><span class="dn">Demo 3</span><p>Invoice from Red Gum Timber, RG-2208, A$3,905.10</p></div>
-      </div>
-      <div class="arrow-down"></div>
-      <div class="proc">
-        <div class="proc-head"><b>Procedure: enter supplier invoice</b><span class="pill">v1 &middot; learned</span></div>
-        <ol class="proc-steps">
-          <li>Open <code>Accounts &rarr; Bills &rarr; New</code></li>
-          <li>Find supplier <code>{supplier}</code> &mdash; if missing, <em>stop and ask</em></li>
-          <li>Enter <code>{invoice_no}</code>, <code>{date}</code>, <code>{amount}</code> incl. GST</li>
-          <li>Attach the source PDF or photo</li>
-          <li>Verify: bill appears in list with matching total</li>
-        </ol>
-      </div>
-      <div class="tests">
-        <div class="tests-head">
-          <b>Supervised test runs</b>
-          <button class="btn btn-ghost btn-sm" id="testBtn">Run 5 unseen cases</button>
-        </div>
-        <div class="test-row" id="testRow"></div>
-        <div class="test-sum" id="testSum"></div>
-      </div>
+<!-- ========== CREDITS ========== -->
+<section data-scene="15 Credits" class="credits" id="credits" aria-label="Credits">
+  <div class="cr-sticky">
+    <div class="cr-roll">
+      <p class="cr-title">Operator</p>
+      <p class="cr-sub">A film about quiet work</p>
+      <dl>
+        <div><dt>Starring</dt><dd>Coastal Retail &middot; Harbour Property &middot; Red Gum Trades &middot; Ironbark Supply</dd></div>
+        <div><dt>Planning</dt><dd>A local model, checked by a policy engine</dd></div>
+        <div><dt>Stunts</dt><dd>Websites and desktop apps with no integration</dd></div>
+        <div><dt>Continuity</dt><dd>Checkpoints before and after every step</dd></div>
+        <div><dt>Safety</dt><dd>Spending limits &middot; Approval gates &middot; Emergency stop</dd></div>
+        <div><dt>Script supervisor</dt><dd>The append-only audit log</dd></div>
+        <div><dt>Filmed on location</dt><dd>One office PC &middot; 3 &times; AMD 32GB</dd></div>
+        <div><dt>Written, built &amp; tested by</dt><dd>Aleksandar</dd></div>
+      </dl>
+      <p class="cr-end">No task was repeated in the making of this film.</p>
     </div>
   </div>
 </section>
 
-<!-- ============ PHASES ============ -->
-<section class="section" id="phases">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="sec-tag">Delivery</span>
-      <h2>Fixed-price phases. Paid when the test passes.</h2>
-      <p>Tests use cases I have not seen. Prices in AUD.</p>
-    </div>
-    <div class="phases">
-      <article class="phase"><div class="ph-n">0</div><h3>Discovery</h3><p class="ph-price">A$1,200 <span>&middot; 3 days</span></p><p>Architecture, model choice, hardware spec, test plan, fixed quote.</p><div class="ph-test"><b>Test</b> Local model is killed mid-task and resumes without repeating a step.</div></article>
-      <article class="phase"><div class="ph-n">1</div><h3>Core platform</h3><p class="ph-price">A$3,000 <span>&middot; 2 weeks</span></p><p>Dashboard, two workspaces, permissions, audit log, backups, emergency stop.</p><div class="ph-test"><b>Test</b> Cloud off, unseen tasks pass, no data crosses, no duplicate actions.</div></article>
-      <article class="phase"><div class="ph-n">2</div><h3>Web &amp; desktop</h3><p class="ph-price">A$3,200 <span>&middot; 2 weeks</span></p><p>Systems with no integration, forms from documents and photos, phone approvals.</p><div class="ph-test"><b>Test</b> Agreed success rate, failures reported, phone step resumes the task.</div></article>
-      <article class="phase"><div class="ph-n">3</div><h3>Learning &amp; calls</h3><p class="ph-price">A$2,800 <span>&middot; 2 weeks</span></p><p>Procedures from demonstration, live call transcription and answers.</p><div class="ph-test"><b>Test</b> You teach an unseen procedure; answers within agreed delay.</div></article>
-      <article class="phase"><div class="ph-n">4</div><h3>Handover</h3><p class="ph-price">A$1,800 <span>&middot; 1 week</span></p><p>Security review, restore drill, documentation, training, all code.</p><div class="ph-test"><b>Test</b> Restore to a clean drive, injection tests pass, credentials changed.</div></article>
-    </div>
-
-    <div class="hw">
-      <div><label>Graphics</label><b>3 &times; AMD 32GB</b><span>ROCm &middot; llama.cpp / vLLM</span></div>
-      <div><label>Minimum</label><b>48GB VRAM</b><span>planner + vision + speech</span></div>
-      <div><label>System RAM</label><b>64GB</b><span>as requested</span></div>
-      <div><label>Ownership</label><b>100% yours</b><span>your repo from day one</span></div>
-    </div>
+<!-- ========== START (CTA) ========== -->
+<section data-scene="16 Next step" class="start" id="start">
+  <video class="start-video" autoplay muted loop playsinline preload="none" poster="assets/photo/brisbane.jpg"><source src="assets/video/city-film.mp4" type="video/mp4"></video>
+  <div class="start-grade"></div>
+  <div class="container start-in">
+    <p class="kicker light" data-reveal>(14) Next step</p>
+    <h2 class="start-title" data-split>Start with <em>Phase 0.</em></h2>
+    <p class="lede light" data-reveal>Three days. A$1,200 fixed. Architecture, hardware spec, test plan, a fixed quote &mdash; and a recorded proof run of a task that survives being killed.</p>
+    <a href="#console" class="btn btn-gold btn-lg magnetic" data-reveal><span>Watch the proof run</span></a>
   </div>
 </section>
+
+</main>
 
 <footer class="foot">
-  <div class="foot-bg"><img src="assets/img/sydney-towers.jpg" alt=""></div>
-  <div class="wrap foot-inner">
-    <div>
-      <div class="brand"><span class="brand-mark"><i></i></span><span>Local AI Operator</span></div>
-      <p class="muted small">Interactive concept demo. All data, timings and results on this page are simulated to show the planned behaviour. Real numbers are measured in Phase 0.</p>
-    </div>
-    <div class="small muted foot-right">
-      <p>Built by Aleksandar &middot; <a href="https://github.com/perfectcode537">github.com/perfectcode537</a></p>
-      <p>Video and photos: Mixkit (free licence), colour graded. 3D: three.js.</p>
-    </div>
+  <div class="container foot-in">
+    <div class="foot-brand"><span class="logo-mark"><i></i></span><span>Operator</span></div>
+    <p>Interactive concept demo. All data, timings and results are simulated to show the planned behaviour; real numbers are measured in Phase 0.</p>
+    <p>Built by Aleksandar &middot; <a href="https://github.com/perfectcode537">github.com/perfectcode537</a><br>Film and photography: Mixkit (free licence), edited and graded. 3D: three.js.</p>
   </div>
+  <div class="foot-word" aria-hidden="true">Operator</div>
 </footer>
 
-<script type="module" src="js/scene.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="js/console.js"></script>
+<script src="js/main.js"></script>
+<script type="module" src="js/core3d.js"></script>
 <script type="module" src="js/iso.js"></script>
-<script src="js/app.js"></script>
-<script src="js/effects.js"></script>
 </body>
 </html>

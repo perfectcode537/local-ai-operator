@@ -8,14 +8,12 @@ Interactive concept demo of a local AI operator that runs on one office PC.
 
 ## What it shows
 
-- **Operator console** - a plain-English goal with a budget and limits becomes a plan. Each step is verified and checkpointed.
-- **Crash recovery** - kill the process mid-task, then resume. Verified steps are skipped and nothing runs twice.
-- **Hard controls** - spending limits, approval gates, emergency stop and an append-only audit log.
-- **Workspaces** - each business has its own data, vault, rules and history. Cross-workspace access is denied in code.
-- **Phone approvals** - a blocked step is parked, sent to the phone, and the task continues after approval.
-- **Live call assist** - local transcription with suggested answers and measured latency.
-- **Learning from demonstration** - three demos become a procedure, tested on unseen cases with honest results.
-- **Delivery phases** - fixed-price milestones, each with its acceptance test.
+- **Opening** - a film title card, then an editorial cover with a grown-to-full-screen reel.
+- **How it works** - a pinned 3D story: Plan, Act, Verify, Report.
+- **Live console** - run a goal, kill the process mid-step, resume without repeating a step, approve on the phone.
+- **Workspaces** - isolated businesses in 3D; a cross-workspace read is denied in code.
+- **A week with the operator** - six video panels on a 3D cylinder that turns as you scroll.
+- **Hard controls, call assist, delivery phases, questions** - with fixed AUD prices and acceptance tests.
 
 ## Run locally
 
@@ -30,7 +28,7 @@ Then open http://localhost:8000.
 ## Tech
 
 - HTML, CSS and plain JavaScript
-- three.js for the 3D hero and the workspace isolation scene
+- three.js for the 3D scenes, GSAP + ScrollTrigger and Lenis for motion
 - Fonts: Inter and JetBrains Mono
 
 ## Credits
